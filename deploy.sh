@@ -9,7 +9,7 @@ yarn build:dev
 # 进入生成的文件夹
 cd vue3-demo
 
-# git pull
+git pull
 git init
 git add -A
 git commit -m 'deploy'

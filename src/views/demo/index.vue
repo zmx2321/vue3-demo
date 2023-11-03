@@ -58,8 +58,9 @@ const handleSelect = (key) => {
   .demo_main {
     width: 98%;
     margin: 20px auto;
-    min-height: 50vh;
+    height: 75vh;
     border: solid 1px #a7a7a7;
+    overflow: auto;
   }
 }
 </style>
