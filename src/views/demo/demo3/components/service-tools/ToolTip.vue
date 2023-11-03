@@ -1,6 +1,6 @@
 <template>
   <section class="block">
-    <el-tooltip placement="top">
+    <el-tooltip placement="top-start" effect="light">
       <!-- 提示信息 -->
       <template #content>
         <slot name="info" />
@@ -17,7 +17,7 @@
 .block {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 50%;
   width: 100px;
   height: 100px;
   opacity: 1;

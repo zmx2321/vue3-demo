@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import /* ref */ 'vue'
+// import /* ref */ 'vue'
 
 // 父组件参数
 defineProps({
@@ -111,7 +111,7 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@import '../scss//common.scss';
+// @import '../scss//common.scss';
 
 .picture_box {
   position: relative;
