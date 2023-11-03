@@ -1,0 +1,2 @@
+import{_ as a}from"./plugin-vueexport-helper-c27b6911.js";import{c as s,a as r,b as l,a0 as _,o as i}from"./vue-c502f4e7.js";const u=["xlink:href"],p={__name:"SvgIcon",props:{name:{type:String,required:!0},color:{type:String,default:""}},setup(o){const e=o,n=s(()=>`#icon-${e.name}`),t=s(()=>e.name?`svg-icon icon-${e.name}`:"svg-icon");return(c,m)=>(i(),r("svg",_({class:t.value},c.$attrs,{style:{color:o.color}}),[l("use",{"xlink:href":n.value},null,8,u)],16))}},g=a(p,[["__scopeId","data-v-848f680b"]]);export{g as default};
+//# sourceMappingURL=SvgIcon-dd97c662.js.map
