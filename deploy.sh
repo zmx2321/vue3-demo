@@ -4,10 +4,10 @@
 set -e
 
 # 生成静态文件
-yarn build
+yarn build:dev
 
 # 进入生成的文件夹
-cd vue_demo
+cd vue3-demo
 
 git pull
 git init

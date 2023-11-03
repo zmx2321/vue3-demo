@@ -1,10 +1,11 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, /* createWebHistory */ createWebHashHistory } from 'vue-router'
 import { staticRouter } from '@/router/modules/staticRouter'
 import NProgress from '@/config/nprogress'
 import { setStorage } from '@/utils/storage.js'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_PUBLIC_PATH),
+  // history: createWebHistory(import.meta.env.VITE_PUBLIC_PATH), // createWebHashHistory
+  history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH), // createWebHashHistory
   routes: [...staticRouter],
   strict: false,
   scrollBehavior: () => ({ left: 0, top: 0 })

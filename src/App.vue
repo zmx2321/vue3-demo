@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import autofit /* , { elRectification } */ from 'autofit.js'
+// import autofit /* , { elRectification } */ from 'autofit.js'
 
 // autofit.init()
 
@@ -18,7 +18,7 @@ import autofit /* , { elRectification } */ from 'autofit.js'
   false
 ) */
 
-autofit.off()
+// autofit.off()
 
 // elRectification('.chart_dom')
 

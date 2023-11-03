@@ -22,7 +22,9 @@ export default defineConfig(({ mode }) => {
   // console.log(createProxy(viteEnv.VITE_PROXY))
 
   return {
-    base: viteEnv.VITE_PUBLIC_PATH,
+    // base: viteEnv.VITE_PUBLIC_PATH,
+    // base: env.VITE_USER_NODE_ENV === 'production' ? './' : '/',
+    base: './',
     root,
     resolve: {
       alias: {
@@ -70,16 +72,19 @@ export default defineConfig(({ mode }) => {
       // 		drop_debugger: true
       // 	}
       // },
-      sourcemap: false, // 是否生成源map
+      // sourcemap: env.VITE_USER_NODE_ENV !== 'production', // 是否生成源map
+      sourcemap: true, // 是否生成源map
       commonjsOptions: {
         include: /node_modules|lib/
       },
-      outDir: 'dist',
+      // outDir: 'dist',
+      outDir: __dirname.split(/[\\/]/).pop(),
       minify: 'esbuild',
       // 禁用 gzip 压缩大小报告，可略微减少打包时间
       reportCompressedSize: false,
       // 规定触发警告的 chunk 大小
       chunkSizeWarningLimit: 2000,
+      // assetsDir: 'assets' // 指定静态资源存放路径
       rollupOptions: {
         output: {
           // Static resource classification and packaging

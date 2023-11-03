@@ -1,7 +1,7 @@
 // STATICS.newdebt_ratio
 import qs from 'qs'
-import dark from './theme/dark'
-import light from './theme/light'
+/* import dark from './theme/dark'
+import light from './theme/light' */
 
 const SOURCES = {
   WMS: 'WMS',
@@ -2450,7 +2450,7 @@ export const glMapConfigTest1 = (id, center, zoom) => ({
   container: id, // 容器的id
   // style: 'http://decision.cncico.com/gis/dist/styles/VectorStyle-dark.json', // 地图描述数据的路径
   // style: dark, // 地图描述数据的路径
-  style: light, // 地图描述数据的路径
+  // style: light, // 地图描述数据的路径
   center: center || [120.5, 28.8], // 初始位置，经度纬度 [lng, lat]
   zoom: zoom || 6.5, // 初始缩放
   minZoom: 6,
@@ -2461,7 +2461,7 @@ export const glMapConfigTest1 = (id, center, zoom) => ({
 export const glMapConfigTest2 = (id, center, zoom) => ({
   container: id, // 容器的id
   // style: 'http://decision.cncico.com/gis/dist/styles/VectorStyle-dark.json', // 地图描述数据的路径
-  style: dark, // 地图描述数据的路径
+  // style: dark, // 地图描述数据的路径
   center: center || [120.5, 28.8], // 初始位置，经度纬度 [lng, lat]
   zoom: zoom || 6.5, // 初始缩放
   minZoom: 6,
