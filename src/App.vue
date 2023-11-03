@@ -3,22 +3,20 @@
 </template>
 
 <script setup>
-// import autofit /* , { elRectification } */ from 'autofit.js'
+import autofit /* , { elRectification } */ from 'autofit.js'
 
 // autofit.init()
 
-/* autofit.init(
+autofit.init(
   {
     dh: 1080,
     dw: 1920,
     el: '#app',
     // resize: true,
-    ignore: ['.demo_wrap', 'demo_main', 'demo_cont']
+    ignore: ['.demo_wrap']
   },
   false
-) */
-
-// autofit.off()
+)
 
 // elRectification('.chart_dom')
 

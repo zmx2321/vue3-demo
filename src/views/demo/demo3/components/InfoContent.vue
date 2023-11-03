@@ -1,6 +1,7 @@
 <template>
   <div class="info_content">
-   <ul v-if="tipInfo.currentBunkInfo">
+    提示信息
+    <!-- <ul v-if="tipInfo.currentBunkInfo">
      <li class="color1 mb5">{{ tipInfo.geographicalDivision }} {{ tipInfo.currentTipNum }}</li>
      <li class="color2 mb5 txt_cont empty" v-if="tipInfo.currentBunkInfo.bunkemptyshopcolour === '-1'">空铺</li>
 
@@ -12,39 +13,50 @@
 
      <li class="color3" v-if="tipInfo.currentBunkInfo.bunkemptyshopcolour !== '-1'">
        {{ tipInfo.currentBunkInfo.bunkname }}
-       <!-- {{ tipInfo.currentBunkInfo }} -->
      </li>
 
      <li class="color4 time" v-if="tipInfo.currentBunkInfo.bunkemptyshopcolour === '1'">剩余{{ tipInfo.currentBunkInfo.diffDay }}天</li>
-   </ul>
+   </ul> -->
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    // 商铺信息
+    /* // 商铺信息
     tipInfo: {
       type: Object,
-      default: ()=> {}
-    },
-  },
+      default: () => {}
+    } */
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/common.scss";
+/* @import '../../scss/common.scss';
 
-$fontColor1: #9D9898;
+$fontColor1: #9d9898;
 $fontColor2: #333333;
 $fontColor3: #585858;
-$fontColor4: #FF5B5B;
+$fontColor4: #ff5b5b;
 
 .info_content {
-  .color1 { color: $fontColor1; font-size: 14px;}
-  .color2 { color: $fontColor2; font-size: 16px;}
-  .color3 { color: $fontColor2; font-size: 12px;}
-  .color4 { color: $fontColor3; font-size: 16px;}
+  .color1 {
+    color: $fontColor1;
+    font-size: 14px;
+  }
+  .color2 {
+    color: $fontColor2;
+    font-size: 16px;
+  }
+  .color3 {
+    color: $fontColor2;
+    font-size: 12px;
+  }
+  .color4 {
+    color: $fontColor3;
+    font-size: 16px;
+  }
 
   ul {
     margin-left: 10px;
@@ -62,7 +74,7 @@ $fontColor4: #FF5B5B;
         position: relative;
 
         &::before {
-          content: "";
+          content: '';
           position: absolute;
           top: 8px;
           left: -11px;
@@ -85,6 +97,5 @@ $fontColor4: #FF5B5B;
       }
     }
   }
-}
+} */
 </style>
-

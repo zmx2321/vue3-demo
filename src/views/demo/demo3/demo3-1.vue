@@ -54,7 +54,7 @@ const getCity = () => {
 .demo_cont {
   .servarea_wrap {
     width: 100%;
-    height: 300px;
+    min-height: 100px;
     margin-top: 10px;
   }
 }

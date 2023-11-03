@@ -9,8 +9,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import jiaXingPictureBox1 from './pictureBox/jiaxing/jiaxingPictureBox1.vue'
-import jiaXingPictureBox2 from './pictureBox/jiaxing/jiaxingPictureBox2.vue'
+import jiaXingPictureBox1 from './pictureBox/jiaxing/jiaXingPictureBox1.vue'
+import jiaXingPictureBox2 from './pictureBox/jiaxing/jiaXingPictureBox2.vue'
 
 const picUrl = ref('1-1')
 

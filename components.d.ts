@@ -11,6 +11,7 @@ declare module 'vue' {
     ElCascader: typeof import('element-plus/es')['ElCascader']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SvgIcon: typeof import('./src/components/global/SvgIcon.vue')['default']

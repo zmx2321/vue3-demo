@@ -27,7 +27,7 @@ defineProps({
   } */
 })
 
-const activeIndex = ref('1')
+const activeIndex = ref('3')
 const handleSelect = (key) => {
   console.log(key)
 
@@ -48,10 +48,18 @@ const handleSelect = (key) => {
 </script>
 
 <style lang="scss" scoped>
-.demo_main {
-  width: 98%;
-  margin: 20px auto;
-  min-height: 50vh;
-  border: solid 1px #a7a7a7;
+.demo_wrap {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+
+  .demo_main {
+    width: 98%;
+    margin: 20px auto;
+    min-height: 50vh;
+    border: solid 1px #a7a7a7;
+  }
 }
 </style>

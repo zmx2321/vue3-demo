@@ -1,14 +1,21 @@
 <template>
   <!-- 盒子模板-获取主事件和数据 -->
-  <picture-box-template :area-image="areaImage" @getTipContent="getTipContent"></picture-box-template>
+  <picture-box-template :area-image="areaImage" @getTipContent="getTipContent">
+    <tool-tip>
+      <template #info>
+        <info-content />
+      </template>
+      <template #btn>编号</template>
+    </tool-tip>
+  </picture-box-template>
 </template>
 
 <script setup>
 // import { ref } from 'vue'
 
 import PictureBoxTemplate from './PictureBoxTemplate.vue'
-// import ToolTip from './ToolTip'
-// import InfoContent from './InfoContent'
+import ToolTip from './ToolTip.vue'
+import InfoContent from './InfoContent.vue'
 
 // 父组件参数
 defineProps({

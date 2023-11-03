@@ -1,19 +1,37 @@
 <template>
-  <el-tooltip class="block" effect="light" placement="top-start">
-    <!-- 多行 -->
-    <div slot="content">
+  <section class="block">
+    <el-tooltip placement="top">
       <!-- 提示信息 -->
-      <slot name="info" />
-    </div>
-    <!-- 文本 -->
-    <slot name="btn" />
-  </el-tooltip>
+      <template #content>
+        <slot name="info" />
+      </template>
+      <!-- 文本 -->
+      <slot name="btn" />
+    </el-tooltip>
+  </section>
 </template>
 
 <style lang="scss" scoped>
-@import "../../scss/common.scss";
+// @import '../../scss/common.scss';
 
 .block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  opacity: 1;
+  background: #fff;
+  cursor: pointer;
+  // overflow: hidden;
+  padding: 0;
+  margin: 0;
+  transform: initial;
+  // border: none;
+  transition: 0.2s linear;
+}
+
+/* .block {
   position: absolute;
   top: 0;
   left: 0;
@@ -44,7 +62,9 @@
     background: $normalHoverColor;
 
     ::v-deep span {
-      .blank, .blank1, .blank2 {
+      .blank,
+      .blank1,
+      .blank2 {
         opacity: 1;
         transition: 0.2s linear;
         background: $normalHoverColor;
@@ -59,7 +79,9 @@
       background: $soonHoverColor;
 
       ::v-deep span {
-        .blank, .blank1, .blank2 {
+        .blank,
+        .blank1,
+        .blank2 {
           background: $soonHoverColor;
         }
       }
@@ -73,11 +95,13 @@
       background: $emptyHoverColor;
 
       ::v-deep span {
-        .blank, .blank1, .blank2 {
+        .blank,
+        .blank1,
+        .blank2 {
           background: $emptyHoverColor;
         }
       }
     }
   }
-}
+} */
 </style>

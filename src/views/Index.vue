@@ -1,6 +1,6 @@
 <template>
   <!-- <section class="main_wrap" v-waterMarker="{ text: '版权所有', textColor: 'rgba(180, 180, 180, 0.4)' }"> -->
-  <section class="main_wrap">vue3_demo</section>
+  <section class="main_wrap"></section>
 
   <!-- 水印 -->
   <water-mark />
@@ -19,3 +19,4 @@
   padding-bottom: 1px;
 }
 </style>
+ 

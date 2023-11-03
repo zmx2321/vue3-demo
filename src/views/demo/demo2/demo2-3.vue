@@ -29,7 +29,7 @@ import { showReqError } from '@/hooks/useError'
 /**
  * 全局变量
  */
-const tabListData = ref(['全国' /* , '浙江定制' */, '浙江普通', '上海', '江苏', '新疆', '广西', '四川', '江西']) // 选项卡
+const tabListData = ref(['全国', '浙江定制', '浙江普通', '上海', '江苏', '新疆', '广西', '四川', '江西']) // 选项卡
 let glMapData = null // 地图核心数据
 let tabCurrent = '浙江普通'
 let currentIndex = 0

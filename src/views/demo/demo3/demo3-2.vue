@@ -1,5 +1,5 @@
 <template>
-  <section>3-2</section>
+  <section class="demo_cont">3-2</section>
 </template>
 
 <script setup>
