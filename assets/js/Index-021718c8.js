@@ -1,0 +1,2 @@
+import _ from"./WaterMark-0a7a8226.js";import{_ as c}from"./_plugin-vue_export-helper-c27b6911.js";import{a as t,s,F as a,o as n,C as p,D as r,b as d}from"./vue-c502f4e7.js";const m=e=>(p("data-v-b5c767ec"),e=e(),r(),e),u=m(()=>d("section",{class:"main_wrap"},"vue3_demo",-1)),i={__name:"Index",setup(e){return(l,x)=>{const o=_;return n(),t(a,null,[u,s(o)],64)}}},b=c(i,[["__scopeId","data-v-b5c767ec"]]);export{b as default};
+//# sourceMappingURL=Index-021718c8.js.map
