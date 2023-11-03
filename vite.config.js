@@ -13,6 +13,10 @@ const __APP_INFO__ = {
   lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss')
 }
 
+// eslint-disable-next-line no-control-regex
+const INVALID_CHAR_REGEX = /[\u0000-\u001F"#$&*+,:;<=>?[\]^`{|}\u007F]/g
+const DRIVE_LETTER_REGEX = /^[a-z]:/i
+
 // @see: https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const root = process.cwd()
@@ -73,7 +77,7 @@ export default defineConfig(({ mode }) => {
       // 	}
       // },
       // sourcemap: env.VITE_USER_NODE_ENV !== 'production', // 是否生成源map
-      sourcemap: true, // 是否生成源map
+      sourcemap: false, // 是否生成源map
       commonjsOptions: {
         include: /node_modules|lib/
       },
@@ -95,6 +99,16 @@ export default defineConfig(({ mode }) => {
           manualChunks: {
             // 创建自定义共享公共块
             vue: ['vue', 'vue-router']
+          },
+
+          // https://github.com/rollup/rollup/blob/master/src/utils/sanitizeFileName.ts
+          // eslint-disable-next-line no-shadow
+          sanitizeFileName(name) {
+            const match = DRIVE_LETTER_REGEX.exec(name)
+            const driveLetter = match ? match[0] : ''
+            // A `:` is only allowed as part of a windows drive letter (ex: C:\foo)
+            // Otherwise, avoid them because they can refer to NTFS alternate data streams.
+            return driveLetter + name.slice(driveLetter.length).replace(INVALID_CHAR_REGEX, '')
           }
         }
       }
