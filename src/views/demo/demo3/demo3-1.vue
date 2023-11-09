@@ -18,6 +18,9 @@ import ServiceMain from './components/ServiceMain.vue'
  * 定义数据
  * 常量 - 变量
  */
+// ref
+const refServiceMain = ref(null)
+
 // 城市下拉框
 const cityOptions = [
   {
@@ -35,14 +38,12 @@ const cityOptions = [
     ]
   }
 ]
-// ref
-const refServiceMain = ref(null)
 
 // 选择的城市
 let cityValue = ref([])
 
 const getCity = () => {
-  console.log(cityOptions[0].children[0].value)
+  // console.log(cityOptions[0].children[0].value)
   refServiceMain.value.setImgUrlByCity(cityValue.value[1])
 }
 

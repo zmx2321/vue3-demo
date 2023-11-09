@@ -1,30 +1,39 @@
 <template>
   <section class="service_main_wrap">
-    <div class="pic_box" @click="clickArea">
+    <div class="pic_box">
       <jiaXingPictureBox1 v-if="picUrl === '1-1'" />
       <jiaXingPictureBox2 v-if="picUrl === '1-2'" />
     </div>
   </section>
+
+  <area-detail ref="refAreaDetail" />
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+// 引入库
+import { ref, nextTick, onMounted } from 'vue'
+import mittBus from '@/utils/mittBus' // mitt
+// store
+import { demoStoreData } from '@/store/modules/demo-store-data.js'
+// 引入组件
 import jiaXingPictureBox1 from './picturebox/jiaxing/jiaXingPictureBox1.vue'
 import jiaXingPictureBox2 from './picturebox/jiaxing/jiaXingPictureBox2.vue'
-
+import AreaDetail from './service-tools/AreaDetail.vue'
 // mock
 import bunkData from '../mock/bunkData.json'
 
-// store
-import { demoStoreData } from '@/store/modules/demo-store-data.js'
-
-let { setCurrentBunkList } = demoStoreData()
-// let store = demoStoreData()
-
+/**
+ * 定义常量、变量
+ */
+const { setCurrentBunkList } = demoStoreData()
+const demoDataStore = demoStoreData()
 const picUrl = ref('')
+// ref
+const refAreaDetail = ref(null)
 
-const clickArea = () => {}
-
+/**
+ * 定义方法
+ */
 // 选择城市
 const setImgUrlByCity = (value) => {
   // console.log('选择城市', value, bunkData.content)
@@ -43,6 +52,12 @@ const setImgUrlByCity = (value) => {
     picUrl.value = value
   })
 }
+
+onMounted(() => {
+  mittBus.on('clickArea', (tipNum) => {
+    refAreaDetail.value.showDetailDialog(tipNum, demoDataStore.currentBunkList)
+  })
+})
 
 /**
  * 暴露方法 - 供父组件执行

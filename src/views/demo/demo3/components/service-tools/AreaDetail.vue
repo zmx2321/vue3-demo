@@ -1,5 +1,5 @@
 <template>
-  <section class="info_content">
+  <el-dialog v-model="dialogVisible" title="Tips" width="30%" class="dialog_wrap">
     <ul>
       <li>
         <dl>
@@ -32,26 +32,49 @@
         </dl>
       </li>
     </ul>
-  </section>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
 // 引入库
 import { ref } from 'vue'
-// store
-import { demoStoreData } from '@/store/modules/demo-store-data.js'
 
 /**
  * 定义常量、变量
  */
-const demoDataStore = demoStoreData()
-const currentBunkNo = demoDataStore.currentBunkNo
-const currentBunkList = demoDataStore.currentBunkList
-const currentBoxData = ref(...currentBunkList.filter((item) => item.bunkNo === currentBunkNo))
+const currentBoxData = ref(null)
+
+/**
+ * 定义常量、变量
+ */
+const dialogVisible = ref(false) // 弹窗
+
+/**
+ * 定义方法
+ */
+// 显示弹窗
+const showDetailDialog = (tipNum, currentBunkList) => {
+  // console.log(tipNum, currentBunkList)
+  currentBoxData.value = currentBunkList.filter((item) => item.bunkNo === tipNum)[0]
+  dialogVisible.value = true
+}
+
+/**
+ * 暴露方法
+ */
+defineExpose({
+  showDetailDialog
+})
 </script>
 
 <style lang="scss" scoped>
-.info_content {
+.dialog_wrap {
   ul {
     li {
       dl {
