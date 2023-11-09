@@ -12,7 +12,7 @@
 </template>
 
 <style lang="scss" scoped>
-// @import '../../scss/common.scss';
+@import '../../scss/common.scss';
 
 .block {
   position: absolute;
@@ -23,12 +23,60 @@
   opacity: 1;
   background: #fff;
   cursor: pointer;
-  // overflow: hidden;
   padding: 0;
   margin: 0;
   transform: initial;
-  // border: none;
   transition: 0.2s linear;
+  // text-align: center;
+
+  &:hover {
+    opacity: 1;
+    transition: 0.2s linear;
+    background: $normalHoverColor;
+    color: #fff;
+
+    ::v-deep span {
+      .blank,
+      .blank1,
+      .blank2 {
+        opacity: 1;
+        transition: 0.2s linear;
+        background: $normalHoverColor;
+      }
+    }
+  }
+
+  &.soon {
+    background: $soonColor;
+
+    &:hover {
+      background: $soonHoverColor;
+
+      ::v-deep span {
+        .blank,
+        .blank1,
+        .blank2 {
+          background: $soonHoverColor;
+        }
+      }
+    }
+  }
+
+  &.empty {
+    background: $emptyColor;
+
+    &:hover {
+      background: $emptyHoverColor;
+
+      ::v-deep span {
+        .blank,
+        .blank1,
+        .blank2 {
+          background: $emptyHoverColor;
+        }
+      }
+    }
+  }
 }
 
 /* .block {

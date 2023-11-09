@@ -1,24 +1,19 @@
 <template>
-  <!-- <section class="picture_box" @mouseover="getDataByEvent"> -->
-  <section class="picture_box">
+  <section class="picture_box" @mouseover="getDataByEvent">
     <img :src="areaImage" />
 
-    <!--
-      服务区
-        大按钮 有字 不用
-        小按钮 无字 样式为none
-
-        样式
-          正常状态 不加
-          空       empty
-          临期     soon
-     -->
     <slot />
   </section>
 </template>
 
 <script setup>
-// import /* ref */ 'vue'
+// import { ref } from 'vue'
+// store
+import { demoStoreData } from '@/store/modules/demo-store-data.js'
+
+let { setCurrentBunkNo } = demoStoreData()
+
+let tipNum = ''
 
 // 父组件参数
 defineProps({
@@ -28,86 +23,85 @@ defineProps({
   }
 })
 
-// let tipNum = ref('')
+// 根据事件对象获取数据
+const getDataByEvent = (e) => {
+  let target = e.target
+  let { nodeName } = target
 
-// // 根据事件对象获取数据
-// const getDataByEvent = (e) => {
-//   console.log(e)
-//   // let target = e.target
-//   // let boxStatus = ''
-//   // console.log(target)
-//   /* // 检查状态
-//   const checkArea = (str1, str2) => {
-//     if (str1.indexOf(str2) !== -1) {
-//       boxStatus = str2
-//     }
-//   }
+  // if (nodeName === 'IMG') return
 
-//   // 改变状态
-//   const setStatus = (tar) => {
-//     // 不管文字存在不存在，样式一直存在
-//     checkArea(tar, 'soon')
-//     checkArea(tar, 'empty')
-//   }
+  if (nodeName === 'DIV') {
+    tipNum = target.parentNode.textContent
+  }
+  if (target.nodeName === 'B') {
+    tipNum = target.textContent
+  }
 
-//   // 如果是div
-//   if (target.nodeName === 'DIV') {
-//     // console.log(target.parentNode.textContent)
-//     tipNum.value = target.parentNode.textContent
+  setCurrentBunkNo(tipNum)
 
-//     // console.log(document.defaultView.getComputedStyle(target, null).backgroundColor)
-//   }
-
-//   // 有文字
-//   if (target.nodeName === 'B') {
-//     tipNum.value = target.textContent
-
-//     // 作用在span上
-//     setStatus(target.parentNode.className)
-//   }
-
-//   // 触发button - 可能有文字也可能没有
-//   if (target.nodeName === 'BUTTON') {
-//     // 作用在button上
-//     setStatus(target.className)
-
-//     // 获取按钮下的span标签
-//     let oSpan = e.target.querySelector('span')
-//     // console.log(oSpan)
-
-//     // 如果文字不存在
-//     if (!oSpan) {
-//       tipNum.value = target.dataset.content
-//     } else {
-//       tipNum.value = target.textContent
-//     }
-//   }
-
-//   if (target.nodeName === 'IMG') {
-//     return
-//   }
-
-//   let bunkList = this.$store.getters.currentBunkList
-//   // console.log(bunkList)
-//   // console.log("店铺列表", bunkList, this.$store.getters.currentBunkList)
-
-//   let bunkInfo = {}
-
-//   bunkList.forEach((item) => {
-//     if (tipNum.value === item.bunkNo) {
-//       bunkInfo = item
-//     }
-//   })
-//   // console.log(tipNum.value)
-
-//   let tipContent = this.$store.getters.tipInfo
-//   this.$set(tipContent, 'currentTipNum', tipNum.value) // 使用set方法添加属性，否则视图不刷新
-//   this.$set(tipContent, 'currentBoxStatus', boxStatus) // 使用set方法添加属性，否则视图不刷新
-//   this.$set(tipContent, 'currentBunkInfo', bunkInfo) // 使用set方法添加属性，否则视图不刷新
-
-//   // 获取全局数据，并发送自定义事件
-//   // this.$emit('getTipContent', tipContent) */
-// }
+  // // console.log(e)
+  // let target = e.target
+  // console.log(target)
+  // let boxStatus = ''
+  // // console.log(target)
+  // // 检查状态
+  // const checkArea = (str1, str2) => {
+  //   if (str1.indexOf(str2) !== -1) {
+  //     boxStatus = str2
+  //   }
+  // }
+  // // 改变状态
+  // const setStatus = (tar) => {
+  //   // 不管文字存在不存在，样式一直存在
+  //   checkArea(tar, 'soon')
+  //   checkArea(tar, 'empty')
+  // }
+  // // 如果是div
+  // if (target.nodeName === 'DIV') {
+  //   // console.log(target.parentNode.textContent)
+  //   tipNum.value = target.parentNode.textContent
+  //   // console.log(document.defaultView.getComputedStyle(target, null).backgroundColor)
+  // }
+  // // 有文字
+  // if (target.nodeName === 'B') {
+  //   tipNum.value = target.textContent
+  //   // 作用在span上
+  //   setStatus(target.parentNode.className)
+  // }
+  // // 触发button - 可能有文字也可能没有
+  // if (target.nodeName === 'BUTTON') {
+  //   // 作用在button上
+  //   setStatus(target.className)
+  //   // 获取按钮下的span标签
+  //   let oSpan = e.target.querySelector('span')
+  //   // console.log(oSpan)
+  //   // 如果文字不存在
+  //   if (!oSpan) {
+  //     tipNum.value = target.dataset.content
+  //   } else {
+  //     tipNum.value = target.textContent
+  //   }
+  // }
+  // if (target.nodeName === 'IMG') {
+  //   return
+  // }
+  // let bunkList = this.$store.getters.currentBunkList
+  // console.log(bunkList)
+  // console.log("店铺列表", bunkList, this.$store.getters.currentBunkList)
+  // let bunkInfo = {}
+  // bunkList.forEach((item) => {
+  //   if (tipNum.value === item.bunkNo) {
+  //     bunkInfo = item
+  //   }
+  // })
+  // console.log(tipNum.value)
+  // let tipContent = this.$store.getters.tipInfo
+  // this.$set(tipContent, 'currentTipNum', tipNum.value) // 使用set方法添加属性，否则视图不刷新
+  // this.$set(tipContent, 'currentBoxStatus', boxStatus) // 使用set方法添加属性，否则视图不刷新
+  // this.$set(tipContent, 'currentBunkInfo', bunkInfo) // 使用set方法添加属性，否则视图不刷新
+  // 获取全局数据，并发送自定义事件
+  // this.$emit('getTipContent', tipContent)
+}
 </script>
 
 <style lang="scss" scoped>

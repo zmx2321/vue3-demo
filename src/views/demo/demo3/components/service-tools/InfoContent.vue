@@ -1,101 +1,62 @@
 <template>
-  <div class="info_content">
-    提示信息
-    <!-- <ul v-if="tipInfo.currentBunkInfo">
-     <li class="color1 mb5">{{ tipInfo.geographicalDivision }} {{ tipInfo.currentTipNum }}</li>
-     <li class="color2 mb5 txt_cont empty" v-if="tipInfo.currentBunkInfo.bunkemptyshopcolour === '-1'">空铺</li>
-
-     <li class="color2 mb5 txt_cont" :class="[{'soon': tipInfo.currentBunkInfo.bunkemptyshopcolour === '1'},
-                                              {'empty': tipInfo.currentBunkInfo.bunkemptyshopcolour === '-1'}]"
-                                      v-if="tipInfo.currentBunkInfo.bunkemptyshopcolour !== '-1'">
-       {{ tipInfo.currentBunkInfo.bunktype }}
-     </li>
-
-     <li class="color3" v-if="tipInfo.currentBunkInfo.bunkemptyshopcolour !== '-1'">
-       {{ tipInfo.currentBunkInfo.bunkname }}
-     </li>
-
-     <li class="color4 time" v-if="tipInfo.currentBunkInfo.bunkemptyshopcolour === '1'">剩余{{ tipInfo.currentBunkInfo.diffDay }}天</li>
-   </ul> -->
-  </div>
+  <section class="info_content">
+    <ul>
+      <li>
+        <dl>
+          <dt>归属：</dt>
+          <dd>{{ currentBoxData.type === 1 ? '嘉兴二楼' : '嘉兴三楼' }}</dd>
+        </dl>
+      </li>
+      <li>
+        <dl>
+          <dt>编号：</dt>
+          <dd>{{ currentBoxData.bunkNo }}</dd>
+        </dl>
+      </li>
+      <li>
+        <dl>
+          <dt>名称：</dt>
+          <dd>{{ currentBoxData.name }}</dd>
+        </dl>
+      </li>
+      <li>
+        <dl>
+          <dt>详情：</dt>
+          <dd>{{ currentBoxData.detail }}</dd>
+        </dl>
+      </li>
+      <li>
+        <dl>
+          <dt>状态：</dt>
+          <dd>{{ currentBoxData.status }}</dd>
+        </dl>
+      </li>
+    </ul>
+  </section>
 </template>
 
-<script>
-export default {
-  props: {
-    /* // 商铺信息
-    tipInfo: {
-      type: Object,
-      default: () => {}
-    } */
-  }
-}
+<script setup>
+import { ref } from 'vue'
+import { demoStoreData } from '@/store/modules/demo-store-data.js'
+
+const demoDataStore = demoStoreData()
+
+const currentBunkNo = demoDataStore.currentBunkNo
+const currentBunkList = demoDataStore.currentBunkList
+const currentBoxData = ref(...currentBunkList.filter((item) => item.bunkNo === currentBunkNo))
 </script>
 
 <style lang="scss" scoped>
-/* @import '../../scss/common.scss';
-
-$fontColor1: #9d9898;
-$fontColor2: #333333;
-$fontColor3: #585858;
-$fontColor4: #ff5b5b;
-
 .info_content {
-  .color1 {
-    color: $fontColor1;
-    font-size: 14px;
-  }
-  .color2 {
-    color: $fontColor2;
-    font-size: 16px;
-  }
-  .color3 {
-    color: $fontColor2;
-    font-size: 12px;
-  }
-  .color4 {
-    color: $fontColor3;
-    font-size: 16px;
-  }
-
   ul {
-    margin-left: 10px;
-
     li {
-      font-family: Microsoft YaHei;
-
-      &.time {
-        &:last-child {
-          margin-top: 15px;
-        }
-      }
-
-      &.txt_cont {
-        position: relative;
-
-        &::before {
-          content: '';
-          position: absolute;
-          top: 8px;
-          left: -11px;
-          width: 6px;
-          height: 6px;
-          border-radius: 3px;
-          border: solid 1px #707070;
-          background: $normalColor;
-        }
-        &.soon {
-          &::before {
-            background: $soonColor;
-          }
-        }
-        &.empty {
-          &::before {
-            background: $emptyColor;
-          }
+      dl {
+        dt,
+        dd {
+          display: inline-block;
         }
       }
     }
   }
-} */
+}
 </style>

@@ -1,21 +1,51 @@
 <template>
   <!-- 盒子模板-获取主事件和数据 -->
   <picture-box-template :area-image="areaImage" @getTipContent="getTipContent">
-    <tool-tip>
+    <tool-tip
+      :class="['bok-' + item.bunkNo, { soon: item.status === '临期' }, { empty: item.status === '空铺' }]"
+      :data-content="item.bunkNo"
+      v-for="(item, index) in currentBunkList"
+      :key="index">
+      <!-- 弹窗信息 -->
       <template #info>
         <info-content />
       </template>
-      <template #btn>编号</template>
+      <!-- 按钮 -->
+      <template #btn>
+        <div class="btn_wrap">
+          <!-- 编号 -->
+          <b>{{ item.bunkNo }}</b>
+          <!-- 空 -->
+          <span class="blank" :class="[{ soon: item.status === '临期' }, { empty: item.status === '空铺' }]"></span>
+        </div>
+      </template>
     </tool-tip>
   </picture-box-template>
 </template>
 
 <script setup>
-// import { ref } from 'vue'
+import { ref } from 'vue'
 
 import PictureBoxTemplate from './PictureBoxTemplate.vue'
 import ToolTip from './ToolTip.vue'
 import InfoContent from './InfoContent.vue'
+
+// store
+import { demoStoreData } from '@/store/modules/demo-store-data.js'
+
+const demoDataStore = demoStoreData()
+
+const currentBunkList = ref(demoDataStore.currentBunkList)
+
+/* // store
+import { demoStoreData } from '@/store/modules/demo-store-data.js'
+
+const demoData = demoStoreData()
+
+console.log(demoData.currentBunkList) */
+
+// import bunkData form '../../mock/bunkData.json'
+// import bunkData from '../../mock/bunkData.json'
 
 // 父组件参数
 defineProps({
@@ -74,3 +104,15 @@ const getTipContent = (val) => {
   tipInfo = val
 } */
 </script>
+
+<style lang="scss" scoped>
+.btn_wrap {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  /* span {
+    color: #fff;
+  } */
+}
+</style>

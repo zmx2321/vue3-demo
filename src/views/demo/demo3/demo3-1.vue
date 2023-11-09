@@ -10,14 +10,14 @@
 
 <script setup>
 // 引入库
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 // 引入组件
 import ServiceMain from './components/ServiceMain.vue'
 
 /**
  * 定义数据
  * 常量 - 变量
- */8
+ */
 // 城市下拉框
 const cityOptions = [
   {
@@ -39,13 +39,17 @@ const cityOptions = [
 const refServiceMain = ref(null)
 
 // 选择的城市
-let cityValue = ref([cityOptions[0].value, cityOptions[0].children[0].value])
+let cityValue = ref([])
 
 const getCity = () => {
-  // console.log(cityValue.value)
-
+  console.log(cityOptions[0].children[0].value)
   refServiceMain.value.setImgUrlByCity(cityValue.value[1])
 }
+
+onMounted(() => {
+  cityValue.value = [cityOptions[0].value, cityOptions[0].children[0].value] // 回显
+  refServiceMain.value.setImgUrlByCity(cityOptions[0].children[0].value) // 设置数据
+})
 </script>
 
 <style lang="scss" scoped>

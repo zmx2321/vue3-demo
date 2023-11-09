@@ -8,19 +8,40 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import jiaXingPictureBox1 from './pictureBox/jiaxing/jiaXingPictureBox1.vue'
-import jiaXingPictureBox2 from './pictureBox/jiaxing/jiaXingPictureBox2.vue'
+import { ref, nextTick } from 'vue'
+import jiaXingPictureBox1 from './picturebox/jiaxing/jiaXingPictureBox1.vue'
+import jiaXingPictureBox2 from './picturebox/jiaxing/jiaXingPictureBox2.vue'
 
-const picUrl = ref('1-1')
+// mock
+import bunkData from '../mock/bunkData.json'
+
+// store
+import { demoStoreData } from '@/store/modules/demo-store-data.js'
+
+let { setCurrentBunkList } = demoStoreData()
+// let store = demoStoreData()
+
+const picUrl = ref('')
 
 const clickArea = () => {}
 
 // 选择城市
 const setImgUrlByCity = (value) => {
-  // console.log('选择城市', value)
+  // console.log('选择城市', value, bunkData.content)
 
-  picUrl.value = value
+  switch (value) {
+    case '1-1':
+      setCurrentBunkList(bunkData.content.filter((item) => item.type === 1))
+      break
+    case '1-2':
+      setCurrentBunkList(bunkData.content.filter((item) => item.type === 2))
+      break
+    default:
+  }
+
+  nextTick(() => {
+    picUrl.value = value
+  })
 }
 
 /**

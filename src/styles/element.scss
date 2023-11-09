@@ -272,3 +272,15 @@
     border-bottom: 1px solid var(--el-border-color-lighter);
   }
 }
+
+.el-popper.is-light {
+  &:not(.el-cascader__dropdown.is-pure) {
+    border: none !important;
+    box-shadow: 0px 2px 8px 1px #747474;
+    width: 195px;
+
+    .popper__arrow {
+      border-top-color: #6e6e6e !important;
+    }
+  }
+}
