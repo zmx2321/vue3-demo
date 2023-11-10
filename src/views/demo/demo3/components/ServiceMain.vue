@@ -1,8 +1,8 @@
 <template>
   <section class="service_main_wrap">
     <div class="pic_box">
-      <jiaXingPictureBox1 v-if="picUrl === '1-1'" />
-      <jiaXingPictureBox2 v-if="picUrl === '1-2'" />
+      <jia-xing-picture-box1 v-if="picUrl === '1-1'" />
+      <jia-xing-picture-box2 v-if="picUrl === '1-2'" />
     </div>
   </section>
 
