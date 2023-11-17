@@ -6,6 +6,10 @@
 export const staticRouter = [
   {
     path: '/',
+    redirect: '/demo/demo3'
+  },
+  {
+    path: '/home',
     name: 'Index',
     component: () => import('@/views/Index.vue'),
     meta: {
