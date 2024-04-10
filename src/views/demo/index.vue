@@ -4,6 +4,7 @@
       <el-menu-item index="1">图表demo</el-menu-item>
       <el-menu-item index="2">地图demo</el-menu-item>
       <el-menu-item index="3">demo3</el-menu-item>
+      <el-menu-item index="4">openlayer</el-menu-item>
     </el-menu>
 
     <div class="demo_main">
@@ -27,7 +28,7 @@ defineProps({
   } */
 })
 
-const activeIndex = ref('3')
+const activeIndex = ref('4')
 const handleSelect = (key) => {
   console.log(key)
 
@@ -40,6 +41,9 @@ const handleSelect = (key) => {
       break
     case '3':
       router.push('/demo/demo3')
+      break
+    case '4':
+      router.push('/demo/demo4')
       break
     default:
       break

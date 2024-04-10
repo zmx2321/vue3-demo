@@ -6,7 +6,7 @@
 export const staticRouter = [
   {
     path: '/',
-    redirect: '/demo/demo3'
+    redirect: '/demo/demo4'
   },
   {
     path: '/home',
@@ -53,6 +53,15 @@ export const staticRouter = [
           keepAlive: true
         },
         component: () => import('@/views/demo/demo3/index.vue')
+      },
+      {
+        path: '/demo/demo4',
+        name: 'Demo4',
+        meta: {
+          title: 'demo4',
+          keepAlive: true
+        },
+        component: () => import('@/views/demo/demo4/index.vue')
       }
     ]
   }
