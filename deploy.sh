@@ -16,6 +16,6 @@ git commit -m 'deploy'
 
 # 如果发布到 https://<USERNAME>.github.io  填写你刚刚创建的仓库地址
 # git push -f https://github.com/zmx2321/blog.git master:gh-pages
-git push -f git@github.com:zmx2321/vue3-demo.git master:gh-pages
+git push -f git@github.com:zmx2321/vue3-demo.git main:gh-pages
 
 cd -
