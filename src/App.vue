@@ -1,27 +1,44 @@
 <template>
-  <router-view></router-view>
+  <el-config-provider :locale="locale" :size="assemblySize" :button="buttonConfig">
+    <router-view></router-view>
+  </el-config-provider>
 </template>
 
-<script setup>
-import autofit /* , { elRectification } */ from 'autofit.js'
+<script setup lang="ts">
+import { onMounted, reactive, computed } from "vue";
+import { useI18n } from "vue-i18n";
+import { getBrowserLang } from "@/utils";
+import { useTheme } from "@/hooks/useTheme";
+import { ElConfigProvider } from "element-plus";
+import { LanguageType } from "./stores/interface";
+import { useGlobalStore } from "@/stores/modules/global";
+import en from "element-plus/es/locale/lang/en";
+import zhCn from "element-plus/es/locale/lang/zh-cn";
 
-// autofit.init()
+const globalStore = useGlobalStore();
 
-autofit.init(
-  {
-    dh: 1080,
-    dw: 1920,
-    el: '#app',
-    // resize: true,
-    ignore: ['.demo_wrap']
-  },
-  false
-)
+// init theme
+const { initTheme } = useTheme();
+initTheme();
 
-// elRectification('.chart_dom')
+// init language
+const i18n = useI18n();
+onMounted(() => {
+  const language = globalStore.language ?? getBrowserLang();
+  i18n.locale.value = language;
+  globalStore.setGlobalState("language", language as LanguageType);
+});
 
-console.log(
-  '%cautofit.js is running',
-  'font-weight: bold; color: #ffb712; background:linear-gradient(-45deg, #bd34fe 50%, #47caff 50% );background: -webkit-linear-gradient( 120deg, #bd34fe 30%, #41d1ff );background-clip: text;-webkit-background-clip: text; -webkit-text-fill-color:linear-gradient( -45deg, #bd34fe 50%, #47caff 50% ); padding: 8px 12px; border-radius: 4px;'
-)
+// element language
+const locale = computed(() => {
+  if (globalStore.language == "zh") return zhCn;
+  if (globalStore.language == "en") return en;
+  return getBrowserLang() == "zh" ? zhCn : en;
+});
+
+// element assemblySize
+const assemblySize = computed(() => globalStore.assemblySize);
+
+// element button config
+const buttonConfig = reactive({ autoInsertSpace: false });
 </script>

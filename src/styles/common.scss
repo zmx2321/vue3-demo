@@ -20,7 +20,7 @@
   height: 0;
   overflow: hidden;
   clear: both;
-  content: '';
+  content: "";
 }
 
 /* 文字单行省略号 */
@@ -80,18 +80,6 @@
   border-radius: 20px;
 }
 
-.bold {
-  font-weight: 600;
-}
-
-.medium {
-  font-weight: 500;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
 /* nprogress */
 #nprogress .bar {
   background: var(--el-color-primary) !important;
@@ -104,22 +92,8 @@
   box-shadow: 0 0 10px var(--el-color-primary), 0 0 5px var(--el-color-primary) !important;
 }
 
-// 输入框宽度
-@each $width in 180, 220, 240, 260, 300 {
-  // @each可以遍历列表$list中的值
-  .w#{$width} {
-    width: #{$width}px !important; // 通过变量直接计算出每个class的transition-delay值
-  }
-}
-/* 字号大小 */
-@for $i from 12 through 40 {
-  .ft#{$i} {
-    font-size: #{$i}px !important;
-  }
-}
-
 /* 外边距、内边距全局样式 */
-@for $i from 0 through 40 {
+@for $i from 0 through 100 {
   .mt#{$i} {
     margin-top: #{$i}px !important;
   }
