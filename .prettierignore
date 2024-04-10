@@ -1,9 +1,5 @@
-/dist/*
-.local
-/node_modules/**
-
-**/*.svg
-**/*.sh
-
-/public/*
-stats.html
+/public/
+/dist/
+/lib/
+/node_modules/
+package.json
