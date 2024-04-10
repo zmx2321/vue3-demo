@@ -33,7 +33,8 @@
     "prepare": "husky install",
     "release": "standard-version",
     "commit": "git add -A && czg && git push",
-    "main": "bash main.sh"
+    "main": "bash main.sh",
+    "deploy": "bash deploy.sh"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
