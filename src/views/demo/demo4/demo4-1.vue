@@ -5,6 +5,9 @@
 </template>
 
 <script setup>
+import { Map, View, Feature, Overlay } from 'ol';
+
+
 </script>
 
 <style lang="scss" scoped>
