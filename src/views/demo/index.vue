@@ -1,6 +1,7 @@
 <template>
   <section class="demo_wrap">
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+      <el-menu-item index="0">大屏自适应</el-menu-item>
       <el-menu-item index="1">图表demo</el-menu-item>
       <el-menu-item index="2">地图demo</el-menu-item>
       <el-menu-item index="3">demo3</el-menu-item>
@@ -33,6 +34,9 @@ const handleSelect = (key) => {
   console.log(key)
 
   switch (key) {
+    case '0':
+      router.push('/demo/screen')
+      break
     case '1':
       router.push('/demo/demo1')
       break

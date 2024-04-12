@@ -25,6 +25,7 @@ declare module 'vue' {
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SacaleAuto: typeof import('./src/components/SacaleAuto/index.vue')['default']
     SvgIcon: typeof import('./src/components/global/SvgIcon.vue')['default']
     WaterMark: typeof import('./src/components/global/WaterMark.vue')['default']
   }

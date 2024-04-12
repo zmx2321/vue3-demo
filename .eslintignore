@@ -16,6 +16,8 @@ dist-ssr
 .history
 
 /src/views/demo
+/src/utils/index.js
+/src/components/SacaleAuto/index.vue
 
 # Editor directories and files
 .vscode/*

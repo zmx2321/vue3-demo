@@ -9,6 +9,11 @@ export const staticRouter = [
     redirect: '/demo/demo4'
   },
   {
+    path: '/demo/screen',
+    name: 'screen',
+    component: () => import('@/views/demo/screen/index.vue'),
+  },
+  {
     path: '/home',
     name: 'Index',
     component: () => import('@/views/Index.vue'),
