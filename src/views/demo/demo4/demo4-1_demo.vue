@@ -3,7 +3,9 @@
 </template>
 
 <script setup name="gis">
+// vue - core
 import { ref, reactive, onMounted } from 'vue';
+// map - core
 import { Map, View, Feature, Overlay } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import { Vector as VectorLayer, WebGLTile } from "ol/layer";
