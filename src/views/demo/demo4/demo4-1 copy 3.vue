@@ -21,7 +21,7 @@ import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 
 onMounted(() => {
   // 初始化地图
-  const olMap = mapUtils.initOlMap('olMap')
+  const olMap = mapUtils.initOlMap()
 
   // 设置地图
   setOlmap(olMap)

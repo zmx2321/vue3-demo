@@ -8,7 +8,6 @@ import { ref, onMounted } from 'vue';
 // map - core
 import * as mapUtils from './mapUtils.js'
 import { Map, View } from 'ol';
-
 // import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
 // import { XYZ } from 'ol/source';
@@ -19,58 +18,43 @@ import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { OSM, Vector as VectorSource } from 'ol/source';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 
-onMounted(() => {
-  // 初始化地图
-  const olMap = mapUtils.initOlMap('olMap')
 
-  // 设置地图
+
+let olMap = null
+
+onMounted(() => {
+  olMap = new Map({
+    target: 'olMap',
+    layers: [mapUtils.tian_di_tu_satellite_layer, mapUtils.tian_di_tu_annotation],
+    view: new View({
+      /* center: fromLonLat([121.63, 29.88]),
+      zoom: 16,
+      maxZoom: 17,
+      minZoom: 9 */
+      center: fromLonLat([116.400819, 39.916263]),
+      zoom: 15,
+      constrainResolution: true,  // 设置缩放级别为整数 
+      smoothResolutionConstraint: false,  // 关闭无级缩放地图
+    })
+  });
+
   setOlmap(olMap)
 })
 
-// 设置地图
 const setOlmap = (olMap) => {
-  // 获取可视区域的四个坐标
-  getCurrentViewPosition(olMap)
-
-  // console.log(olMap)
-  // addCurve(olMap)
-
-  // setPoint(olMap)
-
-  // mapEvent(olMap)
-}
-
-// 获取可视区域的四个坐标
-const getCurrentViewPosition = (olMap) => {
   console.log(olMap)
+  addCurve(olMap)
+
+  setPoint(olMap)
+
+  mapEvent(olMap)
 }
 
 
 const mapEvent = (olMap) => {
-  const olExtent = ol.extent;
+  console.log(111)
   olMap.on('moveend', e => {
-
-    console.log(ol)
-    // console.log('zoom', olMap.frameState_.viewState.zoom);
-    // const extent = olMap.frameState_.extent;
-    // console.log('extent', extent);
-    // console.log('TopLeft', olExtent.getTopLeft(extent));
-    // console.log('BottomRight', olExtent.getBottomRight(extent));
-    // console.log(e, olMap)
-    // const extent = olMap.frameState_.extent
-    // console.log('extent', extent)
-    // console.log('topLeft', olMap.extent)
-
-
-    /* var extent = view.calculateExtent(map.value.getSize());
-    var topLeftCoord = getTopLeft(extent);
-    var bottomRightCoord = getBottomRight(extent);
-    var topLeftCoordProj = transform(topLeftCoord, 'EPSG:3857', 'EPSG:4326');
-    var bottomRightCoordProj = transform(bottomRightCoord, 'EPSG:3857', 'EPSG:4326'); */
-
-
-
-
+    console.log(e)
   })
 
 }
