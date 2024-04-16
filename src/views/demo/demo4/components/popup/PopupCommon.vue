@@ -18,7 +18,7 @@ import { toStringHDMS } from 'ol/coordinate';
 import * as mapUtils from '../../mapUtils'
 
 // 点击标注弹出气泡
-const setPointPopup = (olMap, e) => {
+const setPointPopup = (olMap, e, popupData) => {
     console.log('点击标注弹出气泡', olMap)
 
     // 使用变量存储弹窗所需的 DOM 对象
@@ -35,10 +35,10 @@ const setPointPopup = (olMap, e) => {
         name: '111',
         hdms,
         coordinate,
-        popupData: 'sdsds'
+        popupData
     }
 
-    mapUtils.setPopup(olMap, e, container, closer, content, popupInner.curvePopupInner(popupObj))
+    mapUtils.setPopup(olMap, e, container, closer, content, popupInner.pointPopupInner(popupObj))
 }
 
 // 点击扇形弹出气泡
@@ -59,7 +59,7 @@ const setCurvePopup = (olMap, e, popupData) => {
         name: '111',
         hdms,
         coordinate,
-        popupData: popupData
+        popupData
     }
 
     mapUtils.setPopup(olMap, e, container, closer, content, popupInner.curvePopupInner(popupObj))

@@ -22,8 +22,28 @@ import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 let count = 0  // 地图点击打点变量
 let overlay = null  // 气泡窗对象
 
-// 扇形测试数据
-const curveTestDataList = [
+// 标注气泡窗测试数据
+export const pointPopupTestDataList = [{
+  lonlat: [121.63, 29.88],
+  pointData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
+    id: 1,
+    title: '测试001',
+    msg: '测试001-1',
+    msg2: '测试001-2',
+  }
+},
+{
+  lonlat: [121.6355502376645, 29.884027098077965],
+  pointData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
+    id: 2,
+    title: '超级无敌炫酷爆龙战神',
+    msg: 'ereeee 描述001',
+    msg2: '超级无敌炫酷爆龙战神 描述002',
+  }
+}]
+
+// 扇形气泡窗测试数据
+export const curvePopupTestDataList = [
   {
     lonlat: [121.63, 29.88],
     curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
@@ -169,7 +189,7 @@ export const clearControls = (olMap) => {
 }
 
 // 设置标注点
-export const setPoint = (olMap, pointList) => {
+export const addPoint = (olMap, pointDataList) => {
   // mapUtils.setPointTest(olMap)
 
   // 创建点的数据源
@@ -194,12 +214,15 @@ export const setPoint = (olMap, pointList) => {
 
   olMap.addLayer(vectorLayer);
 
-  pointList.forEach((coordinates) => {
-    const point = new Point(fromLonLat(coordinates));
+  console.log(pointDataList)
+
+  pointDataList.forEach((item) => {
+    const point = new Point(fromLonLat(item.lonlat));
     const feature = new Feature({
       geometry: point,
-      type: 'Marker'
+      type: 'Marker',
       // name: 'Marker'
+      pointData: item.pointData
     });
     vectorSource.addFeature(feature);
   });
@@ -209,6 +232,7 @@ export const setPoint = (olMap, pointList) => {
 export const addCurve = (olMap, curveDataList)=> {
   let featureList = []
   curveDataList.forEach(item=> {
+    // console.log(item)
     let origi_point = fromLonLat(item.lonlat);  // 绘制扇形的顶点
     let circle = createRegularPolygonCurve(origi_point, 500, 100, 30, 90) // 调用绘制扇形的方法得到扇形
     let feature = new Feature(circle);  // 把扇形加入 feature
@@ -225,7 +249,7 @@ export const addCurve = (olMap, curveDataList)=> {
     )
     feature.set('type', 'Curve')  // 这是给这个扇形添加额外的参数 ， 如果是设置id 用 setId方法
     // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
-    feature.set('curve', item.curveData)
+    feature.set('curveData', item.curveData)
     featureList.push(feature)
   })
 

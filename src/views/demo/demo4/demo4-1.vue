@@ -14,6 +14,10 @@ import * as mapUtils from './mapUtils.js'
 import PopupCommon from './components/popup/PopupCommon.vue'
 // test
 import { fromLonLat, transform } from 'ol/proj';
+// 工具
+// import { apiCommon } from '@/utils/index.js'
+// 业务
+// import * as lgApi from "@/api/gis/gis";
 
 const refPopupCommon = ref(null)
 
@@ -30,73 +34,95 @@ const getMapInitInfo = (olMap) => {
   console.log("地图加载完初始化后获取地图的一些信息", olMap)
 
   // 获取可视区域的左上角和右下角坐标
-  // getCurrentViewPosition(olMap)  // 地图加载时会自动触发一次
+  getCurrentViewPosition(olMap)  // 地图加载时会自动触发一次 - 这里做测试
 }
 
 // 设置地图
 const setOlmap = (olMap) => {
-  setPoint(olMap)  // 设置标注点
-  setCurve(olMap)  // 设置扇形区
+  setPoint(olMap)  // 设置标注点 - 测试时使用
+  setCurve(olMap)  // 设置扇形区 - 测试时使用
   mapEvent(olMap)  // 地图事件
 }
 
 /**
- * 地图工具方法
- */
+* 业务方法
+*/
+// 根据数据渲染
+const renderFeatureByData = (olMap, dataList) => {
+  dataList.forEach(item => {
+    if (item.coverType === '室内') {
+      let innerPoint = []
+      innerPoint.push({
+        lonlat: [item.longitude, item.latitude],
+        pointData: {
+          machineRoom: item.machineRoom
+        }
+      })
+      // 批量添加点
+      mapUtils.addPoint(olMap, innerPoint)
+    }
+
+    if (item.coverType === '室外') {
+      let outPoint = []
+      outPoint.push({
+        lonlat: [item.longitude, item.latitude],
+        curveData: {
+          city: item.city,
+          county: item.county,
+          coverType: item.coverType,
+          machineRoom: item.machineRoom
+        }
+      })
+      // 批量添加扇形
+      mapUtils.addCurve(olMap, outPoint)
+    }
+  })
+}
+
+/**
+* 地图工具方法
+*/
 // 获取可视区域的左上角和右下角坐标
-const getCurrentViewPosition = (olMap) => {
+const getCurrentViewPosition = async (olMap) => {
   let viewPosition = mapUtils.getCurrentViewPosition(olMap)
-  console.log("获取可视区域的左上角和右下角坐标", viewPosition)
+  // console.log("获取可视区域的左上角和右下角坐标", viewPosition)
+
+  // console.log(viewPosition)
+
+  let params4G = {
+    "minLatitude": viewPosition.bottomRight[1],
+    "maxLatitude": viewPosition.topLeft[1],
+    "minLongitude": viewPosition.topLeft[0],
+    "maxLongitude": viewPosition.bottomRight[0]
+  }
+  let params5G = {
+    "minLatitude": viewPosition.bottomRight[1],
+    "maxLatitude": viewPosition.topLeft[1],
+    "minLongitude": viewPosition.topLeft[0],
+    "maxLongitude": viewPosition.bottomRight[0]
+  }
+
+  /**
+   * 4g接口
+   */
+  // let params4GData = await apiCommon(lgApi.queryCell4gList, params4G)
+  // renderFeatureByData(olMap, params4GData.data)
+
+  /**
+   * 5g接口
+   */
+  // let params5GData = await apiCommon(lgApi.queryCell5gList, params5G)
+  // renderFeatureByData(olMap, params5GData.data)
 }
 
 // 设置标注点
 const setPoint = (olMap) => {
-  // mapUtils.setPointTest(olMap)
-
-  // 添加多个点
-  const points = [
-    [121.63, 29.88],
-    [121.6355502376645, 29.884027098077965],
-    // ... 更多点
-  ];
-
-  mapUtils.setPoint(olMap, points)
+  mapUtils.addPoint(olMap, mapUtils.pointPopupTestDataList)
 }
 
 // 设置扇形区
 const setCurve = (olMap) => {
-  // 扇形测试数据
-  const curveDataList = [
-    {
-      lonlat: [121.63, 29.88],
-      curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
-        id: 1,
-        title: '测试001',
-        msg: '测试001-1',
-        msg2: '测试001-2',
-      }
-    },
-    {
-      lonlat: [121.62734448609538, 29.882481380845533],
-      curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
-        id: 2,
-        title: '超级无敌炫酷爆龙战神',
-        msg: '超级无敌炫酷爆龙战神 描述001',
-        msg2: '超级无敌炫酷爆龙战神 描述002',
-      }
-    },
-    {
-      lonlat: [121.62663909818951, 29.87877807366553],
-      curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
-        id: 2,
-        title: '333',
-        msg: '222 描述001',
-        msg2: '3444 描述002',
-      }
-    },
-  ]
-
-  mapUtils.addCurve(olMap, curveDataList)
+  mapUtils.addCurve(olMap, mapUtils.curvePopupTestDataList)
 }
 
 // 地图事件
@@ -119,18 +145,21 @@ const mapEvent = (olMap) => {
     })
     // 点击点标注
     if (Feature && Feature.get('type') === 'Marker') {
-      console.log('Marker点标注', Feature);
+      // console.log('Marker点标注', Feature);
+
+      const popupData = Feature.get('pointData')
+      console.log('获取点标注数据', popupData)
 
       // 点击标注弹出气泡测试方法
-      refPopupCommon.value.setPointPopup(olMap, e)
+      refPopupCommon.value.setPointPopup(olMap, e, JSON.stringify(popupData))
     }
 
     // 点击扇形区域
     if (Feature && Feature.get('type') === 'Curve') {
-      console.log('点击扇形区域', Feature);
+      // console.log('点击扇形区域', Feature);
 
-      const popupData = Feature.get('curve')
-      console.log(Feature.get('curve'))
+      const popupData = Feature.get('curveData')
+      console.log('获取扇形区数据', popupData)
 
       // 点击扇形弹出气泡
       refPopupCommon.value.setCurvePopup(olMap, e, JSON.stringify(popupData))
@@ -146,15 +175,15 @@ const mapEvent = (olMap) => {
     })
     console.log(feature) */
 
-    getCurrentViewPosition(olMap)
+    // getCurrentViewPosition(olMap)
   })
 }
 
 
 /**
- * vue生命周期函数
- * 挂载后触发
- */
+* vue生命周期函数
+* 挂载后触发
+*/
 onMounted(() => {
   const olMap = mapUtils.initOlMap('olMap')  // 初始化地图
 
