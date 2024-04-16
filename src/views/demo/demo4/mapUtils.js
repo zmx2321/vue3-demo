@@ -11,6 +11,7 @@ import { Point, MultiLineString, LineString, Polygon } from "ol/geom";
 import { OSM, Vector as VectorSource } from 'ol/source';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';  // VectorLayer表示珊格图层
 import LinearRing from 'ol/geom/LinearRing';
+import Overlay from 'ol/Overlay';  // 气泡
 // map 样式
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 
@@ -52,10 +53,45 @@ const mapInitConfig = {
     // center: fromLonLat([116.400819, 39.916263]),
     // View默认使用EPSG3857坐标系
     // projection: 'EPSG:4326',
-    zoom: 15,
+    // zoom: 15,
     constrainResolution: true,  // 设置缩放级别为整数 
     smoothResolutionConstraint: false,  // 关闭无级缩放地图
   })
+}
+
+/**
+ * 绘制扇形核心方法
+ * APIMethod:OpenLayers绘制扇形的接口扩展
+ * @param origin 圆心
+ * @param radius 半径
+ * @param sides 边数
+ * @param r 弧度
+ * @param angel 旋转角度（扇形右边半径与x正向轴的角度）
+ * @returns {OpenLayers.Geometry.Polygon}
+ */
+const createRegularPolygonCurve = (origin, radius, sides, r, angel) => {
+  let rotation = 360 - r;
+  let angle = Math.PI * ((1 / sides) - (1 / 2));
+  if (rotation) {
+    angle += (rotation / 180) * Math.PI;
+  }
+  let rotatedAngle, x, y;
+  let points = [];
+  for (let i = 0; i < sides; ++i) {
+    let an = i * ((360 - rotation) / 360);
+    rotatedAngle = angle + (an * 2 * Math.PI / sides);
+    x = origin[0] + (radius * Math.cos(rotatedAngle));
+    y = origin[1] + (radius * Math.sin(rotatedAngle));
+    points.push([x, y]);
+  }
+  if (rotation != 0) {
+    points.push(origin);
+  }
+  var ring = new LinearRing(points);
+  ring.rotate(angel / 57.3, origin);
+  let list = ring.getCoordinates()
+
+  return new Polygon([list]);
 }
 
 /******************************
@@ -100,12 +136,101 @@ export const clearControls = (olMap) => {
   // olMap.addControl(new control.ZoomSlider());
 }
 
+// 设置标注点
+export const setPoint = (olMap, pointList) => {
+  // mapUtils.setPointTest(olMap)
 
+  // 创建点的数据源
+  const vectorSource = new VectorSource({
+    features: [],
+  });
+
+  // 创建点图层
+  const vectorLayer = new VectorLayer({
+    source: vectorSource,
+    style: new Style({
+      image: new CircleStyle({
+        radius: 5,
+        fill: new Fill({ color: 'red' }),
+        stroke: new Stroke({ color: 'black', width: 1 }),
+      }),
+    }),
+  });
+
+  olMap.addLayer(vectorLayer);
+
+  pointList.forEach((coordinates) => {
+    const point = new Point(fromLonLat(coordinates));
+    const feature = new Feature({
+      geometry: point,
+      name: 'Marker'
+    });
+    vectorSource.addFeature(feature);
+  });
+}
+
+// 设置气泡窗
+let overlay = null
+export const setPopup = (olMap, container, closer, content)=> {
+  // 使用变量存储弹窗所需的 DOM 对象
+  /* var container = document.getElementById('popup');
+  var closer = document.getElementById('popup-closer');
+  var content = document.getElementById('popup-content'); */
+  overlay = new Overlay({
+    element: container, //绑定 Overlay 对象和 DOM 对象的
+    autoPan: false, // 定义弹出窗口在边缘点击时候可能不完整 设置自动平移效果
+    autoPanAnimation: {
+      duration: 250, //自动平移效果的动画时间 9毫秒）
+    },
+  });
+  olMap.addOverlay(overlay);
+  closer.onclick = function () {
+    overlay.setPosition(undefined);
+    closer.blur();
+    return false;
+  };
+}
 /******************************
  * 测试
  * ****************************
  */
-// 移除标注
+// 打点测试
+export const setPointTest = (olMap)=> {
+  // fromLonLat([121.63, 29.88])
+
+  const features = [];
+  // console.log(e.coordinate); // 获取坐标
+
+  const iconFeature = new Feature({
+    geometry: new Point(fromLonLat([121.63, 29.88])),
+    // name: count++,
+    location: fromLonLat([121.63, 29.88])
+  });
+  const style = new Style({
+    image: new CircleStyle({
+      radius: 10,
+      fill: new Fill({
+        color: '#f49d41'
+      }),
+      stroke: new Stroke({
+        color: '#836365',
+        width: 1
+      })
+    })
+  });
+  iconFeature.setStyle(style);
+  features.push(iconFeature);
+  const vectorSource = new VectorSource({
+    features
+  });
+  const vectorLayer = new VectorLayer({
+    source: vectorSource,
+    opacity: 0.8
+  });
+  olMap.addLayer(vectorLayer);
+}
+
+// 移除标注测试
 export const removePointTest = (olMap)=> {
   const layers = olMap.getLayers();
   layers.forEach(item => {
@@ -113,7 +238,7 @@ export const removePointTest = (olMap)=> {
   });
 }
 
-// 点击打点
+// 点击打点测试
 export const clickSetPointTest = (olMap, e)=> {
   const features = [];
   // console.log(e.coordinate); // 获取坐标
@@ -147,42 +272,8 @@ export const clickSetPointTest = (olMap, e)=> {
   olMap.addLayer(vectorLayer);
 }
 
-/**
-       * APIMethod:OpenLayers绘制扇形的接口扩展
-       * @param origin 圆心
-       * @param radius 半径
-       * @param sides 边数
-       * @param r 弧度
-       * @param angel 旋转角度（扇形右边半径与x正向轴的角度）
-       * @returns {OpenLayers.Geometry.Polygon}
-       */
-const createRegularPolygonCurve = (origin, radius, sides, r, angel) => {
-  let rotation = 360 - r;
-  let angle = Math.PI * ((1 / sides) - (1 / 2));
-  if (rotation) {
-    angle += (rotation / 180) * Math.PI;
-  }
-  let rotatedAngle, x, y;
-  let points = [];
-  for (let i = 0; i < sides; ++i) {
-    let an = i * ((360 - rotation) / 360);
-    rotatedAngle = angle + (an * 2 * Math.PI / sides);
-    x = origin[0] + (radius * Math.cos(rotatedAngle));
-    y = origin[1] + (radius * Math.sin(rotatedAngle));
-    points.push([x, y]);
-  }
-  if (rotation != 0) {
-    points.push(origin);
-  }
-  var ring = new LinearRing(points);
-  ring.rotate(angel / 57.3, origin);
-  let list = ring.getCoordinates()
-
-  return new Polygon([list]);
-}
-
-// 绘制扇形
-export const addCurve = (olMap) => {
+// 绘制扇形测试
+export const addCurveTest = (olMap) => {
   let origi_point = fromLonLat([121.63, 29.88]);  // 绘制扇形的顶点
   let circle = createRegularPolygonCurve(origi_point, 500, 100, 30, 90) // 调用绘制扇形的方法得到扇形
   let feature = new Feature(circle);  // 把扇形加入 feature
