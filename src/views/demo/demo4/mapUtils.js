@@ -20,6 +20,38 @@ import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
  * ****************************
  */
 let count = 0  // 地图点击打点变量
+let overlay = null  // 气泡窗对象
+
+// 扇形测试数据
+const curveTestDataList = [
+  {
+    lonlat: [121.63, 29.88],
+    curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
+      id: 1,
+      title: '测试001',
+      msg: '测试001-1',
+      msg2: '测试001-2',
+    }
+  },
+  {
+    lonlat: [121.62734448609538, 29.882481380845533],
+    curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
+      id: 2,
+      title: '超级无敌炫酷爆龙战神',
+      msg: '超级无敌炫酷爆龙战神 描述001',
+      msg2: '超级无敌炫酷爆龙战神 描述002',
+    }
+  },
+  {
+    lonlat: [121.62663909818951, 29.87877807366553],
+    curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
+      id: 2,
+      title: '333',
+      msg: '222 描述001',
+      msg2: '3444 描述002',
+    }
+  },
+]
 
 /******************************
  * 地图变量(工具)
@@ -150,6 +182,9 @@ export const setPoint = (olMap, pointList) => {
     source: vectorSource,
     style: new Style({
       image: new CircleStyle({
+        /* image: new Icon({
+          src: 'data/icon.png',
+        }), */
         radius: 5,
         fill: new Fill({ color: 'red' }),
         stroke: new Stroke({ color: 'black', width: 1 }),
@@ -163,32 +198,71 @@ export const setPoint = (olMap, pointList) => {
     const point = new Point(fromLonLat(coordinates));
     const feature = new Feature({
       geometry: point,
-      name: 'Marker'
+      type: 'Marker'
+      // name: 'Marker'
     });
     vectorSource.addFeature(feature);
   });
 }
 
-// 设置气泡窗
-let overlay = null
-export const setPopup = (olMap, container, closer, content)=> {
-  // 使用变量存储弹窗所需的 DOM 对象
-  /* var container = document.getElementById('popup');
-  var closer = document.getElementById('popup-closer');
-  var content = document.getElementById('popup-content'); */
+// 添加扇形
+export const addCurve = (olMap, curveDataList)=> {
+  let featureList = []
+  curveDataList.forEach(item=> {
+    let origi_point = fromLonLat(item.lonlat);  // 绘制扇形的顶点
+    let circle = createRegularPolygonCurve(origi_point, 500, 100, 30, 90) // 调用绘制扇形的方法得到扇形
+    let feature = new Feature(circle);  // 把扇形加入 feature
+    feature.setStyle(  // 设置一下这个扇形的样式
+      new Style({
+        fill: new Fill({
+          color: 'rgba(32, 157, 230, 0.3)'
+        }),
+        stroke: new Stroke({
+          color: 'rgba(255, 205, 67, 0.3)',
+          width: 2
+        }),
+      })
+    )
+    feature.set('type', 'Curve')  // 这是给这个扇形添加额外的参数 ， 如果是设置id 用 setId方法
+    // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
+    feature.set('curve', item.curveData)
+    featureList.push(feature)
+  })
+
+  let vectorSource = new VectorSource();  // 创建一个数据源
+  vectorSource.addFeatures(featureList);   // 把两个扇形加进数据源
+  let vectorLayer = new VectorLayer({     // 创建一个图层，把数据源加进图层
+    source: vectorSource
+  });
+  olMap.addLayer(vectorLayer);   // 把图层加进地图
+}
+
+/**
+ * 设置气泡窗
+ * @param {*} olMap 地图对象
+ * @param {*} e 地图事件对象
+ * @param {*} container 气泡窗dom容器
+ * @param {*} closer 气泡窗关闭dom容器
+ * @param {*} content 气泡窗内容dom容器
+ * @param {*} popupData 气泡窗数据
+ */
+export const setPopup = (olMap, e, container, closer, content, popupData)=> {
   overlay = new Overlay({
-    element: container, //绑定 Overlay 对象和 DOM 对象的
-    autoPan: false, // 定义弹出窗口在边缘点击时候可能不完整 设置自动平移效果
-    autoPanAnimation: {
-      duration: 250, //自动平移效果的动画时间 9毫秒）
-    },
+      element: container, //绑定 Overlay 对象和 DOM 对象的
+      autoPan: true, // 定义弹出窗口在边缘点击时候可能不完整 设置自动平移效果
+      /* autoPanAnimation: {
+          duration: 250, // 自动平移效果的动画时间 9毫秒）
+      }, */
   });
   olMap.addOverlay(overlay);
   closer.onclick = function () {
-    overlay.setPosition(undefined);
-    closer.blur();
-    return false;
+      overlay.setPosition(undefined);
+      closer.blur();
+      return false;
   };
+
+  content.innerHTML = popupData;
+  overlay.setPosition(e.coordinate); //把 overlay 显示到指定的 x,y坐标
 }
 /******************************
  * 测试

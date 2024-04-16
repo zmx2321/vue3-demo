@@ -2,7 +2,7 @@
   <section id="olMap" class="ol_map"></section>
 
   <!--  气泡窗测试 -->
-  <PopupTest ref="popupTest" />
+  <PopupCommon ref="refPopupCommon" />
 </template>
 
 <script setup name="gis">
@@ -10,25 +10,12 @@
 import { ref, onMounted } from 'vue';
 // map - core
 import * as mapUtils from './mapUtils.js'
-import { Map, View } from 'ol';
+// 组件
+import PopupCommon from './components/popup/PopupCommon.vue'
+// test
+import { fromLonLat, transform } from 'ol/proj';
 
-import * as olExtent from 'ol/extent';
-
-// import TileLayer from 'ol/layer/Tile';
-import { fromLonLat, transform, toLonLat } from 'ol/proj';
-// import { XYZ } from 'ol/source';
-import LinearRing from 'ol/geom/LinearRing';
-import { Point, MultiLineString, LineString, Polygon } from "ol/geom";
-import Feature from 'ol/Feature';
-import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
-import { OSM, Vector as VectorSource } from 'ol/source';
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
-import Overlay from 'ol/Overlay';
-import { toStringHDMS } from 'ol/coordinate';
-
-import PopupTest from './components/popup/PopupTest.vue'
-
-const popupTest = ref(null)
+const refPopupCommon = ref(null)
 
 // 地图加载完初始化做的一些操作
 const mapInit = (olMap) => {
@@ -49,7 +36,7 @@ const getMapInitInfo = (olMap) => {
 // 设置地图
 const setOlmap = (olMap) => {
   setPoint(olMap)  // 设置标注点
-  addCurve(olMap)  // 设置扇形区
+  setCurve(olMap)  // 设置扇形区
   mapEvent(olMap)  // 地图事件
 }
 
@@ -76,11 +63,40 @@ const setPoint = (olMap) => {
   mapUtils.setPoint(olMap, points)
 }
 
-// 弹框
-const overlay = ref();
 // 设置扇形区
-const addCurve = (olMap) => {
-  mapUtils.addCurveTest(olMap)
+const setCurve = (olMap) => {
+  // 扇形测试数据
+  const curveDataList = [
+    {
+      lonlat: [121.63, 29.88],
+      curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
+        id: 1,
+        title: '测试001',
+        msg: '测试001-1',
+        msg2: '测试001-2',
+      }
+    },
+    {
+      lonlat: [121.62734448609538, 29.882481380845533],
+      curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
+        id: 2,
+        title: '超级无敌炫酷爆龙战神',
+        msg: '超级无敌炫酷爆龙战神 描述001',
+        msg2: '超级无敌炫酷爆龙战神 描述002',
+      }
+    },
+    {
+      lonlat: [121.62663909818951, 29.87877807366553],
+      curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
+        id: 2,
+        title: '333',
+        msg: '222 描述001',
+        msg2: '3444 描述002',
+      }
+    },
+  ]
+
+  mapUtils.addCurve(olMap, curveDataList)
 }
 
 // 地图事件
@@ -95,17 +111,29 @@ const mapEvent = (olMap) => {
 
   // 监听鼠标单击事件
   olMap.on('singleclick', e => {
-    console.log('点击地图', e.coordinate)
+    console.log('点击地图', transform(e.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
+    // 获取图层
     const Feature = olMap.forEachFeatureAtPixel(e.pixel, (feature) => {
       return feature
     })
-    console.log(Feature)
-    if (Feature && Feature.get('name') === 'Marker') {
-      console.log('Marker点标注');
+    // 点击点标注
+    if (Feature && Feature.get('type') === 'Marker') {
+      console.log('Marker点标注', Feature);
 
       // 点击标注弹出气泡测试方法
-      popupTest.value.cttest(olMap, e)
+      refPopupCommon.value.setPointPopup(olMap, e)
+    }
+
+    // 点击扇形区域
+    if (Feature && Feature.get('type') === 'Curve') {
+      console.log('点击扇形区域', Feature);
+
+      const popupData = Feature.get('curve')
+      console.log(Feature.get('curve'))
+
+      // 点击扇形弹出气泡
+      refPopupCommon.value.setCurvePopup(olMap, e, JSON.stringify(popupData))
     }
   })
 
