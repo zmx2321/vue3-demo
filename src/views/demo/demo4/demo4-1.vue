@@ -3,6 +3,9 @@
 
   <!--  气泡窗测试 -->
   <PopupCommon ref="refPopupCommon" />
+
+  <!-- 重叠Feature -->
+  <FeatureDetailDialog ref="refFeatureDetailDialog" />
 </template>
 
 <script setup name="gis">
@@ -12,6 +15,7 @@ import { ref, onMounted } from 'vue';
 import * as mapUtils from './mapUtils.js'
 // 组件
 import PopupCommon from './components/popup/PopupCommon.vue'
+import FeatureDetailDialog from './components/dialog/FeatureDetailDialog.vue'
 // test
 import { fromLonLat, transform } from 'ol/proj';
 // 工具
@@ -20,6 +24,7 @@ import { fromLonLat, transform } from 'ol/proj';
 // import * as lgApi from "@/api/gis/gis";
 
 const refPopupCommon = ref(null)
+const refFeatureDetailDialog = ref(null)
 
 // 地图加载完初始化做的一些操作
 const mapInit = (olMap) => {
@@ -138,6 +143,21 @@ const mapEvent = (olMap) => {
   // 监听鼠标单击事件
   olMap.on('singleclick', e => {
     console.log('点击地图', transform(e.coordinate, 'EPSG:3857', 'EPSG:4326'))
+
+    var pixel = olMap.getEventPixel(e.originalEvent);
+    var features = olMap.getFeaturesAtPixel(pixel);
+
+    if (features) {
+      // 这里的features是点击位置上的所有feature数组
+      console.log(features);
+      // 你可以在这里进行进一步的处理，比如高亮feature等
+
+      if (features.length > 1) {
+        console.log('有重叠')
+
+        refFeatureDetailDialog.value.show(olMap, features)
+      }
+    }
 
     // 获取图层
     const Feature = olMap.forEachFeatureAtPixel(e.pixel, (feature) => {
