@@ -214,8 +214,6 @@ export const addPoint = (olMap, pointDataList) => {
 
   olMap.addLayer(vectorLayer);
 
-  console.log(pointDataList)
-
   pointDataList.forEach((item) => {
     const point = new Point(fromLonLat(item.lonlat));
     const feature = new Feature({
