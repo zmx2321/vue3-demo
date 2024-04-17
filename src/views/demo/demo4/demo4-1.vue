@@ -144,45 +144,50 @@ const mapEvent = (olMap) => {
   olMap.on('singleclick', e => {
     console.log('点击地图', transform(e.coordinate, 'EPSG:3857', 'EPSG:4326'))
 
-    var pixel = olMap.getEventPixel(e.originalEvent);
-    var features = olMap.getFeaturesAtPixel(pixel);
+    let pixel = olMap.getEventPixel(e.originalEvent);
+    let featureList = olMap.getFeaturesAtPixel(pixel);  // 点击时获取所有features
+    // 这里的features是点击位置上的所有feature数组
+    // console.log('点击时获取所有feature', featureList[0].get('type'))
 
-    if (features) {
-      // 这里的features是点击位置上的所有feature数组
-      console.log(features);
-      // 你可以在这里进行进一步的处理，比如高亮feature等
+    // 如果feature数组存在(不为空)
+    if (featureList) {
+      if (featureList.length === 1) {
+        // console.log('无重叠,单个feature')
 
-      if (features.length > 1) {
-        console.log('有重叠')
+        // 获取图层
+        const Feature = olMap.forEachFeatureAtPixel(e.pixel, (feature) => {
+          return feature
+        })
+        // 点击点标注
+        if (Feature && Feature.get('type') === 'Marker') {
+          // console.log('Marker点标注', Feature);
 
-        refFeatureDetailDialog.value.show(olMap, features)
+          const popupData = Feature.get('pointData')
+          console.log('获取点标注数据', popupData)
+
+          // 点击标注弹出气泡测试方法
+          refPopupCommon.value.setPointPopup(olMap, e, JSON.stringify(popupData))
+        }
+
+        // 点击扇形区域
+        if (Feature && Feature.get('type') === 'Curve') {
+          // console.log('点击扇形区域', Feature);
+
+          const popupData = Feature.get('curveData')
+          console.log('获取扇形区数据', popupData)
+
+          // 点击扇形弹出气泡
+          refPopupCommon.value.setCurvePopup(olMap, e, JSON.stringify(popupData))
+        }
       }
-    }
+      if (featureList.length > 1) {
+        console.log('有重叠,多个feature')
 
-    // 获取图层
-    const Feature = olMap.forEachFeatureAtPixel(e.pixel, (feature) => {
-      return feature
-    })
-    // 点击点标注
-    if (Feature && Feature.get('type') === 'Marker') {
-      // console.log('Marker点标注', Feature);
+        // 点击扇形弹出气泡
+        // refPopupCommon.value.setCurvePopup(olMap, e, JSON.stringify(popupData))
 
-      const popupData = Feature.get('pointData')
-      console.log('获取点标注数据', popupData)
-
-      // 点击标注弹出气泡测试方法
-      refPopupCommon.value.setPointPopup(olMap, e, JSON.stringify(popupData))
-    }
-
-    // 点击扇形区域
-    if (Feature && Feature.get('type') === 'Curve') {
-      // console.log('点击扇形区域', Feature);
-
-      const popupData = Feature.get('curveData')
-      console.log('获取扇形区数据', popupData)
-
-      // 点击扇形弹出气泡
-      refPopupCommon.value.setCurvePopup(olMap, e, JSON.stringify(popupData))
+        refFeatureDetailDialog.value.show(olMap, featureList)
+      }
     }
   })
 
