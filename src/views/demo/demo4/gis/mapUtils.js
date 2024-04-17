@@ -22,32 +22,11 @@ import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 let count = 0  // 地图点击打点变量
 let overlay = null  // 气泡窗对象
 
-// 标注气泡窗测试数据
-export const pointPopupTestDataList = [{
-  lonlat: [121.63, 29.88],
-  pointData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
-    id: 1,
-    title: '测试001',
-    msg: '测试001-1',
-    msg2: '测试001-2',
-  }
-},
-{
-  lonlat: [121.6355502376645, 29.884027098077965],
-  pointData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
-    id: 2,
-    title: '超级无敌炫酷爆龙战神',
-    msg: 'ereeee 描述001',
-    msg2: '超级无敌炫酷爆龙战神 描述002',
-  }
-}]
-
-// 扇形气泡窗测试数据
-export const curvePopupTestDataList = [
+// 扇形测试数据
+const curveTestDataList = [
   {
     lonlat: [121.63, 29.88],
     curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
-      antDirectionAngle: 20,  // 扇形方位角 - 重要
       id: 1,
       title: '测试001',
       msg: '测试001-1',
@@ -65,15 +44,6 @@ export const curvePopupTestDataList = [
   },
   {
     lonlat: [121.62663909818951, 29.87877807366553],
-    curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
-      id: 2,
-      title: '333',
-      msg: '222 描述001',
-      msg2: '3444 描述002',
-    }
-  },
-  {
-    lonlat: [121.6307155242378, 29.88191269564227],
     curveData: {   // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
       id: 2,
       title: '333',
@@ -111,7 +81,7 @@ const mapInitConfig = {
     center: fromLonLat([121.63, 29.88]),
     zoom: 16,
     maxZoom: 17,
-    minZoom: 9,
+    minZoom: 15,
     // center: fromLonLat([116.400819, 39.916263]),
     // View默认使用EPSG3857坐标系
     // projection: 'EPSG:4326',
@@ -229,20 +199,112 @@ export const addPoint = (olMap, pointDataList) => {
     const feature = new Feature({
       geometry: point,
       type: 'Marker',
-      // name: 'Marker'
       pointData: item.pointData
     });
     vectorSource.addFeature(feature);
   });
 }
 
+// 设置扇形区样式
+const setCurveStyle = (fillColor, strokeColor = 'rgba(255, 205, 67, 0.3)')=> {
+  return new Style({
+    fill: new Fill({
+      color: fillColor
+    }),
+    stroke: new Stroke({
+      color: strokeColor,
+      width: 2
+    }),
+  })
+}
+
 // 添加扇形
+/**
+ * 绘制扇形核心方法
+ * APIMethod:OpenLayers绘制扇形的接口扩展
+ * @param origin 圆心
+ * @param radius 半径
+ * @param sides 边数
+ * @param r 弧度
+ * @param angel 旋转角度（扇形右边半径与x正向轴的角度）
+ * @returns {OpenLayers.Geometry.Polygon}
+ */
+// 根据频段展示不同颜色 有边缘  
+// 先写死,后期需要可配置
 export const addCurve = (olMap, curveDataList)=> {
+  let featureList = []  // 扇区feature列表
+
+  // 根据业务数据修改feature数据
+  curveDataList.forEach(item=> {
+    // 频率
+    console.log(item.curveData.workFrequency)
+    
+    let curveStyle = null  // 扇区样式
+    let curveRadius = 0  // 扇区半径
+
+    /**
+     * 根据频率获取数据
+     * 
+     * A频段  100  填充: rgba(200, 22, 100, 0.5)   线:
+     * D频段  110  填充: rgba(55, 33, 188, 0.5)   线:
+     * E频段  120  填充: rgba(88, 99, 200, 0.5)   线:
+     * F频段  130  填充: rgba(255, 255, 0, 0.5)   线:
+     * FDD  140   填充:  rgba(255, 76, 127, 0.5)  线:
+     * 其他  150  填充:  rgba(32, 222, 230, 0.5)   线 : rgba(255, 205, 67, 0.3)
+     */
+    switch(item.curveData.workFrequency) {
+      case 'A频段':
+        curveStyle = setCurveStyle('rgba(200, 22, 100, 0.5)')
+        curveRadius = 100
+        break;
+      case 'D频段':
+        curveStyle = setCurveStyle('rgba(55, 33, 188, 0.5)')
+        curveRadius = 110
+        break;
+      case 'E频段':
+        curveStyle = setCurveStyle('rgba(88, 99, 200, 0.5)')
+        curveRadius = 120
+        break;
+      case 'F频段':
+        curveStyle = setCurveStyle('rgba(255, 255, 0, 0.5)')
+        curveRadius = 130
+        break;
+      case 'FDD':
+        curveStyle = setCurveStyle('rgba(255, 76, 127, 0.5)')
+        curveRadius = 140
+        break;
+      default:
+        curveStyle = setCurveStyle('rgba(32, 222, 230, 0.5)')
+        curveRadius = 150
+        break
+    }
+
+    let origi_point = fromLonLat(item.lonlat);  // 绘制扇形的顶点
+    // let circle = createRegularPolygonCurve(origi_point, 150, 100, 45, 90) // 调用绘制扇形的方法得到扇形
+    let circle = createRegularPolygonCurve(origi_point, curveRadius, 100, 45, item.curveData.antDirectionAngle) // 调用绘制扇形的方法得到扇形
+    let feature = new Feature(circle);  // 把扇形加入 feature
+
+    feature.setStyle(curveStyle)
+    feature.set('type', 'Curve')  // 这是给这个扇形添加额外的参数 ， 如果是设置id 用 setId方法
+    // 这是给这个扇形添加额外的参数，这里的id和 setId的id没关系
+    feature.set('curveData', item.curveData)
+    featureList.push(feature)
+  })
+
+  let vectorSource = new VectorSource();  // 创建一个数据源
+  vectorSource.addFeatures(featureList);   // 把两个扇形加进数据源
+  let vectorLayer = new VectorLayer({     // 创建一个图层，把数据源加进图层
+    source: vectorSource
+  });
+  olMap.addLayer(vectorLayer);   // 把图层加进地图
+}
+/* export const addCurve = (olMap, curveDataList)=> {
   let featureList = []
   curveDataList.forEach(item=> {
-    // console.log(item)
+    console.log(item.curveData.workFrequency)
     let origi_point = fromLonLat(item.lonlat);  // 绘制扇形的顶点
-    let circle = createRegularPolygonCurve(origi_point, 500, 100, 30, 90) // 调用绘制扇形的方法得到扇形
+    // let circle = createRegularPolygonCurve(origi_point, 150, 100, 45, 90) // 调用绘制扇形的方法得到扇形
+    let circle = createRegularPolygonCurve(origi_point, 150, 100, 45, item.curveData.antDirectionAngle) // 调用绘制扇形的方法得到扇形
     let feature = new Feature(circle);  // 把扇形加入 feature
     feature.setStyle(  // 设置一下这个扇形的样式
       new Style({
@@ -267,7 +329,7 @@ export const addCurve = (olMap, curveDataList)=> {
     source: vectorSource
   });
   olMap.addLayer(vectorLayer);   // 把图层加进地图
-}
+} */
 
 /**
  * 设置气泡窗
