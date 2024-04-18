@@ -201,6 +201,9 @@ const mapEvent = (olMap) => {
         // 这里的features是点击位置上的所有feature数组
         // console.log('点击时获取所有feature', featureList[0].get('type'))
 
+        // 未点击时,popup是隐藏状态,在点击时显示,为了避免左下角出现
+        refPopupCommon.value.showPopup()
+
         // 如果feature数组存在(不为空)
         if (featureList) {
             // 单个feature
@@ -288,6 +291,7 @@ onMounted(() => {
     .ol_map {
         width: 100%;
         height: 100%;
+        overflow: hidden;
     }
 }
 </style>

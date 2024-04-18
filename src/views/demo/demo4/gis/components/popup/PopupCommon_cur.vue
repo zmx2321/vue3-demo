@@ -1,5 +1,5 @@
 <template>
-    <div id="popup" class="ol-popup" v-show="isShowPopup">
+    <div id="popup" class="ol-popup">
         <div class="popup_wrap">
             <a href="#" id="popup-closer" class="ol-popup-closer"></a>
             <div id="popup-content" class="popup-content"></div>
@@ -18,13 +18,6 @@ import Overlay from 'ol/Overlay';
 import { toStringHDMS } from 'ol/coordinate';
 
 import * as mapUtils from '../../mapUtils'
-
-// 如果popup不设置overflow的话,会在左下角显示,这里在一开始进行隐藏
-let isShowPopup = ref(false)
-
-const showPopup = () => {
-    isShowPopup.value = true
-}
 
 // 点击标注弹出气泡
 const setPointPopup = (olMap, e, popupData) => {
@@ -103,7 +96,6 @@ const setFeaturesPopup = (olMap, e, popupData) => {
  * 暴露方法 - 供父组件执行
  */
 defineExpose({
-    showPopup,
     setPointPopup,
     setCurvePopup,
     setFeaturesPopup
@@ -111,20 +103,29 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-$popupBg: rgba(111, 168, 247, 0.8);
+$popupBg: #f00;
 
 .ol-popup {
-    position: absolute;
-    left: -50px;
-    bottom: 12px;
-    padding: 15px;
-    background: $popupBg;
-    min-width: 200px;
+    /* position: relative;
+    background: #fff;
+    max-width: 300px;
     max-height: 200px;
+    overflow: auto; */
+    position: absolute;
+    // background-color: #012456;
+    padding: 15px;
+    // border: 1px solid #012456;
+    bottom: 12px;
+    left: -50px;
+    min-width: 200px;
+    background: $popupBg;
+    // max-width: 300px;
+    // max-height: 200px;
+    // overflow: auto;
 
     .popup_wrap {
-        width: 100%;
-        max-height: 170px;
+        max-width: 300px;
+        max-height: 200px;
         overflow: auto;
     }
 
@@ -155,24 +156,17 @@ $popupBg: rgba(111, 168, 247, 0.8);
 
     .ol-popup-closer {
         position: absolute;
-        top: 1px;
-        right: 3px;
+        right: 0;
         width: 10px;
         height: 10px;
-        cursor: pointer;
 
         &::after {
             content: "✖";
         }
     }
 
-    :deep .popup-content {
-        color: #2c2c2c;
-
-        p {
-            font-size: 12px;
-            color: #514b4b;
-        }
+    .popup-content {
+        // color: #fff;
     }
 }
 </style>

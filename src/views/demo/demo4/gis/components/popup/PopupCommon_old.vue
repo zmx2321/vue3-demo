@@ -1,9 +1,7 @@
 <template>
-    <div id="popup" class="ol-popup" v-show="isShowPopup">
-        <div class="popup_wrap">
-            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-            <div id="popup-content" class="popup-content"></div>
-        </div>
+    <div id="popup" class="ol-popup">
+        <a href="#" id="popup-closer" class="ol-popup-closer">x</a>
+        <div id="popup-content" class="popup-content"></div>
     </div>
 </template>
 
@@ -18,13 +16,6 @@ import Overlay from 'ol/Overlay';
 import { toStringHDMS } from 'ol/coordinate';
 
 import * as mapUtils from '../../mapUtils'
-
-// 如果popup不设置overflow的话,会在左下角显示,这里在一开始进行隐藏
-let isShowPopup = ref(false)
-
-const showPopup = () => {
-    isShowPopup.value = true
-}
 
 // 点击标注弹出气泡
 const setPointPopup = (olMap, e, popupData) => {
@@ -103,7 +94,6 @@ const setFeaturesPopup = (olMap, e, popupData) => {
  * 暴露方法 - 供父组件执行
  */
 defineExpose({
-    showPopup,
     setPointPopup,
     setCurvePopup,
     setFeaturesPopup
@@ -111,68 +101,18 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-$popupBg: rgba(111, 168, 247, 0.8);
-
 .ol-popup {
-    position: absolute;
-    left: -50px;
-    bottom: 12px;
-    padding: 15px;
-    background: $popupBg;
-    min-width: 200px;
+    position: relative;
+    background: #fff;
+    max-width: 300px;
     max-height: 200px;
-
-    .popup_wrap {
-        width: 100%;
-        max-height: 170px;
-        overflow: auto;
-    }
-
-    &::after,
-    &::before {
-        top: 100%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-    }
-
-    .ol-popup:after {
-        border-top-color: $popupBg;
-        border-width: 10px;
-        left: 48px;
-        margin-left: -10px;
-    }
-
-    &::before {
-        border-top-color: $popupBg;
-        border-width: 11px;
-        left: 48px;
-        margin-left: -11px;
-    }
+    overflow: auto;
 
     .ol-popup-closer {
         position: absolute;
-        top: 1px;
-        right: 3px;
+        right: 0;
         width: 10px;
         height: 10px;
-        cursor: pointer;
-
-        &::after {
-            content: "✖";
-        }
-    }
-
-    :deep .popup-content {
-        color: #2c2c2c;
-
-        p {
-            font-size: 12px;
-            color: #514b4b;
-        }
     }
 }
 </style>

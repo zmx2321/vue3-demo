@@ -237,7 +237,7 @@ export const addCurve = (olMap, curveDataList)=> {
   // 根据业务数据修改feature数据
   curveDataList.forEach(item=> {
     // 频率
-    console.log(item.curveData.workFrequency)
+    // console.log(item.curveData.workFrequency)
     
     let curveStyle = null  // 扇区样式
     let curveRadius = 0  // 扇区半径
