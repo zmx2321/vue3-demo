@@ -1,8 +1,7 @@
 <template>
     <section class="ol_map_wrap">
         <!-- 搜索组件 -->
-        <!-- <map-search class="map_search_wrap" /> -->
-        <map-search />
+        <map-search class="map_search_wrap" />
 
         <section id="olMap" class="ol_map"></section>
 
@@ -20,30 +19,24 @@ import { ref, onMounted } from 'vue';
 // map - core
 import * as mapUtils from './mapUtils.js'
 // 组件
-import MapSearch from './components/map-search/index.vue'
+import MapSearch from './components/MapSearch.vue'
 import PopupCommon from './components/popup/PopupCommon.vue'  // 气泡窗
 import Lend from './components/Lend.vue'
 // test
 import { fromLonLat, transform } from 'ol/proj';
-import info from './components/test-data/info.json'
 // 工具
 import { apiCommon } from '@/utils/index.js'
-import mittBus from '@/utils/mittBus' // mitt
 // 业务
 import * as lgApi from "@/api/gis/gis";
 
 const refPopupCommon = ref(null)
 const refLend = ref(null)
-let myOlMap = ref(null)
 
-// 测试数据
-let test4GData = []
-let test5GData = []
+// const isRenderFlag = false
 
 // 地图加载完初始化做的一些操作
 const mapInit = (olMap) => {
     console.log('地图加载完初始化做的一些操作', olMap)
-    myOlMap = olMap  // 赋值全局变量,为后续业务操作做准备
 
     // 移除控件
     mapUtils.clearControls(olMap)
@@ -54,7 +47,7 @@ const getMapInitInfo = (olMap) => {
     console.log("地图加载完初始化后获取地图的一些信息", olMap)
 
     // 获取可视区域的左上角和右下角坐标
-    getCurrentViewPosition(olMap)  // 地图加载时会自动触发一次 - 这里做测试
+    // getCurrentViewPosition(olMap)  // 地图加载时会自动触发一次 - 这里做测试
 }
 
 // 设置地图
@@ -69,7 +62,6 @@ const setOlmap = (olMap) => {
  */
 // 根据数据渲染Feature
 const renderFeatureByData = (olMap, dataList) => {
-    // console.log(dataList)
     dataList.forEach(item => {
         // console.log(JSON.stringify(item))
 
@@ -109,104 +101,22 @@ const renderFeatureByData = (olMap, dataList) => {
 }
 
 /**
- * 接收其他组件派发的方法
- */
-// 获取工参
-mittBus.on('getContactType', val => {
-    // console.log("获取工参", val, myOlMap)
-
-    mapUtils.removeAllLayer(myOlMap)  // 移除所有图层
-
-    // 加载数据
-    switch (val) {
-        case '4g':
-            getCurrentViewPosition4G(myOlMap)
-            break
-        case '5g':
-            getCurrentViewPosition5G(myOlMap)
-            break
-        default:
-            getCurrentViewPosition(myOlMap)
-            break
-
-    }
-})
-// 查询cgi
-mittBus.on('searchByCGI', async (val) => {
-    console.log("查询cgi", val, myOlMap, info)
-
-    // 根据CGI获取数据
-    /* let itemData = await apiCommon(lgApi.getDataByCGI, '460-00-11615405-133')
-    console.log("itemData", itemData) */
-    let itemData = info
-
-    setMapBySingleData(myOlMap, itemData)
-})
-// 获取为查询小区名称被选择的网络制式,并返回相对应的数据
-mittBus.on('selectContactType', async (val) => {
-    console.log("获取为查询小区名称被选择的网络制式,并返回相对应的数据", val, myOlMap)
-
-    let params = {
-        name: "",
-        type: parseInt(val)
-    }
-
-    // 获取为查询小区名称被选择的网络制式,并返回相对应的数据
-    /* let getCellNameSelectData = await apiCommon(lgApi.getSelectDataByContactType, params)
-    console.log('获取为查询小区名称被选择的网络制式,并返回相对应的数据', getCellNameSelectData) */
-
-    // 获取测试数据
-    // console.log("获取测试数据", params, test4GData, test5GData)
-
-    // 改造数据
-    test4GData.forEach(item => {
-        item.newCellName = item.cellName
-    })
-    test5GData.forEach(item => {
-        item.newCellName = item.nrCellName
-    })
-
-    let testCellNameSelectData = []
-    switch (val) {
-        case '4g':
-            testCellNameSelectData = test4GData
-            break
-        case '5g':
-            testCellNameSelectData = test5GData
-            break
-    }
-    // console.log('获取测试数据', testCellNameSelectData)
-
-    // 获取CellName数据
-    mittBus.emit('getCellNameSelectData', testCellNameSelectData)
-})
-// 选择小区名称
-mittBus.on('selectcCellName', itemData => {
-    // console.log("选择数据", itemData)
-
-    setMapBySingleData(myOlMap, itemData)
-})
-
-// 通过单条数据设置地图
-const setMapBySingleData = (olMap, itemData) => {
-    mapUtils.removeAllLayer(olMap)  // 移除所有图层
-
-    // 调用函数飞到指定的坐标
-    mapUtils.flyToCoordinate(myOlMap, [itemData.longitude, itemData.latitude]);
-
-    renderFeatureByData(olMap, [itemData])
-}
-
-
-/**
  * 地图工具方法
  */
-// 设置4g
-const getCurrentViewPosition4G = async (olMap) => {
+// 获取可视区域的左上角和右下角坐标
+const getCurrentViewPosition = async (olMap) => {
     let viewPosition = mapUtils.getCurrentViewPosition(olMap)
     // console.log("获取可视区域的左上角和右下角坐标", viewPosition)
 
+    // console.log(viewPosition)
+
     let params4G = {
+        "minLatitude": viewPosition.bottomRight[1],
+        "maxLatitude": viewPosition.topLeft[1],
+        "minLongitude": viewPosition.topLeft[0],
+        "maxLongitude": viewPosition.bottomRight[0]
+    }
+    let params5G = {
         "minLatitude": viewPosition.bottomRight[1],
         "maxLatitude": viewPosition.topLeft[1],
         "minLongitude": viewPosition.topLeft[0],
@@ -218,35 +128,12 @@ const getCurrentViewPosition4G = async (olMap) => {
      */
     let params4GData = await apiCommon(lgApi.queryCell4gList, params4G)
     renderFeatureByData(olMap, params4GData.data)
-    // console.log(JSON.stringify(params4GData.data[10]))
-
-    test4GData = params4GData.data
-}
-// 设置5g
-const getCurrentViewPosition5G = async (olMap) => {
-    let viewPosition = mapUtils.getCurrentViewPosition(olMap)
-    // console.log("获取可视区域的左上角和右下角坐标", viewPosition)
-
-    let params5G = {
-        "minLatitude": viewPosition.bottomRight[1],
-        "maxLatitude": viewPosition.topLeft[1],
-        "minLongitude": viewPosition.topLeft[0],
-        "maxLongitude": viewPosition.bottomRight[0]
-    }
 
     /**
      * 5g接口
      */
     let params5GData = await apiCommon(lgApi.queryCell5gList, params5G)
     renderFeatureByData(olMap, params5GData.data)
-
-    test5GData = params5GData.data
-}
-
-// 获取可视区域的左上角和右下角坐标
-const getCurrentViewPosition = (olMap) => {
-    getCurrentViewPosition4G(olMap)
-    getCurrentViewPosition5G(olMap)
 }
 
 // 设置标注点
@@ -349,7 +236,7 @@ const mapEvent = (olMap) => {
     olMap.on('moveend', e => {
         console.log('拖拽移动触发事件', e)
 
-        // getCurrentViewPosition(olMap)
+        getCurrentViewPosition(olMap)
     })
 }
 
@@ -404,6 +291,10 @@ onMounted(() => {
     position: relative;
     width: 100%;
     height: 800px;
+
+    .map_search_wrap {
+        width: 100%;
+    }
 
     .ol_map {
         width: 100%;

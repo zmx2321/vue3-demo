@@ -358,6 +358,27 @@ export const setPopup = (olMap, e, container, closer, content, popupData)=> {
   content.innerHTML = popupData;
   overlay.setPosition(e.coordinate); //把 overlay 显示到指定的 x,y坐标
 }
+
+// 移除所有图层
+export const removeAllLayer = (olMap)=> {
+  console.log(olMap)
+
+  // 获取当前地图上的所有图层
+  var layers = olMap.getLayers().getArray();
+
+  // 从地图中移除所有图层
+  for (var i = layers.length - 1; i >= 0; --i) {
+    if (layers[i] instanceof VectorLayer) olMap.removeLayer(layers[i]);
+  }
+}
+
+// 飞到指定坐标的
+export const flyToCoordinate = (olMap, lonlat)=> {
+  olMap.getView().animate({
+    center: fromLonLat(lonlat),
+    duration: 2000, // 飞行时间，单位毫秒
+  });
+}
 /******************************
  * 测试
  * ****************************
