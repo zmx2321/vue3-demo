@@ -40,8 +40,8 @@
                 <!-- 自定义内容 -->
                 <template #default="{ item }">
                     <div class="auto_cellname_item_wrap">
-                        <h3 class="value">{{ item.cgi }}</h3>
-                        <span class="link">{{ item.newCellName }}</span>
+                        <h3>{{ item.cgi }}</h3>
+                        <span>{{ item.newCellName }}</span>
                     </div>
                 </template>
             </el-autocomplete>
@@ -75,6 +75,7 @@ mittBus.on('getCellNameSelectData', async (cellNameList) => {
  */
 // 自动补全输入框
 const createFilter = (queryString) => {
+    // console.log(queryString, restaurant)
     return (restaurant) => {
         return (
             restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
@@ -102,6 +103,8 @@ const searchByCGI = () => {
 // 选择网络制式
 const selectContactType = () => {
     // console.log(ruleForm.value.selectedContactTypeToCellName)
+
+    ruleForm.value.cellName = ""
 
     mittBus.emit('selectContactType', ruleForm.value.selectedContactTypeToCellName)
 }

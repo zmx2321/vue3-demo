@@ -1,6 +1,6 @@
 <template>
   <el-button type="primary" :icon="Search" @click="toggleSearch" class="search_btn">
-    {{ isShowSearch === 'none' ? '显示' : '关闭' }}搜索
+    {{ isShowSearch === 'none' ? '显示' : '关闭' }}信息窗
   </el-button>
 
   <el-tabs type="border-card" class="map_search_wrap">
@@ -79,7 +79,7 @@ const showSearch = () => {
   :deep .el-tabs__header {
     .el-tabs__nav-wrap {
       .el-tabs__nav-scroll {
-        padding-left: 100px;
+        padding-left: 112px;
       }
     }
   }

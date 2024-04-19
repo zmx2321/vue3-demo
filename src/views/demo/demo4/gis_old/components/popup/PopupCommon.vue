@@ -1,5 +1,5 @@
 <template>
-    <div id="popup" class="ol-popup" v-show="isShowPopup">
+    <div id="popup" class="ol-popup popup_toggle" v-show="isShowPopup">
         <div class="popup_wrap">
             <a href="#" id="popup-closer" class="ol-popup-closer"></a>
             <div id="popup-content" class="popup-content"></div>
@@ -24,6 +24,11 @@ let isShowPopup = ref(false)
 
 const showPopup = () => {
     isShowPopup.value = true
+}
+
+const hidePopup = () => {
+    // console.log('隐藏Popup')
+    isShowPopup.value = false
 }
 
 // 点击标注弹出气泡
@@ -104,6 +109,7 @@ const setFeaturesPopup = (olMap, e, popupData) => {
  */
 defineExpose({
     showPopup,
+    hidePopup,
     setPointPopup,
     setCurvePopup,
     setFeaturesPopup
@@ -121,6 +127,10 @@ $popupBg: rgba(111, 168, 247, 0.8);
     background: $popupBg;
     min-width: 200px;
     max-height: 200px;
+
+    /* &.popup_toggle {
+        display: v-bind("isShowPopup");
+    } */
 
     .popup_wrap {
         width: 100%;

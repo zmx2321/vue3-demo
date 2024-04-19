@@ -161,9 +161,11 @@ mittBus.on('selectContactType', async (val) => {
     // 改造数据
     test4GData.forEach(item => {
         item.newCellName = item.cellName
+        item.value = item.cellName
     })
     test5GData.forEach(item => {
         item.newCellName = item.nrCellName
+        item.value = item.nrCellName
     })
 
     let testCellNameSelectData = []
@@ -195,8 +197,10 @@ const setMapBySingleData = (olMap, itemData) => {
     mapUtils.flyToCoordinate(myOlMap, [itemData.longitude, itemData.latitude]);
 
     renderFeatureByData(olMap, [itemData])
-}
 
+    // 选择数据隐藏气泡
+    refPopupCommon.value.hidePopup()
+}
 
 /**
  * 地图工具方法
@@ -312,6 +316,9 @@ const mapEvent = (olMap) => {
     // 监听鼠标单击事件
     olMap.on('singleclick', e => {
         console.log('点击地图', transform(e.coordinate, 'EPSG:3857', 'EPSG:4326'))
+
+        // 点击地图隐藏气泡窗
+        refPopupCommon.value.hidePopup()
 
         let pixel = olMap.getEventPixel(e.originalEvent);
         let featureList = olMap.getFeaturesAtPixel(pixel);  // 点击时获取所有features
