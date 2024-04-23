@@ -227,12 +227,12 @@ const gisDataAsync = async (params, next, isMerge) => {
     gisData = gisData.data
     // console.log("44444", gisData)
 
-    /* gisData.cell4gList.forEach(item => {
+    gisData.cell4gList.forEach(item => {
         item.networkType = '4g'
     })
     gisData.cell5gList.forEach(item => {
         item.networkType = '5g'
-    }) */
+    })
     // console.log(gisData)
 
     if (isMerge) {

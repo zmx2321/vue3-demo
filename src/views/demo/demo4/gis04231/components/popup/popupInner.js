@@ -32,7 +32,7 @@ export const commonPopupInner = popupObj=> {
     const positionFix = 3  // 坐标保留几位小数
 
     return `
-        <h3>${popupData.cellName}</h3>
+        <h3>${popupData.newCellName}</h3>
         <ul>
             <li>
                 <dl>
@@ -89,17 +89,20 @@ export const commonPopupInner = popupObj=> {
 }
 
 // 多个feature气泡窗
-export const featuresPopupInner = (popupObj)=> {
-    console.log('多个feature气泡窗', popupObj)
-    console.log('多个feature气泡窗', popupObj.popupData)
+export const featuresPopupInner = (popupObj, next)=> {
+    /* console.log('多个feature气泡窗', popupObj)
+    console.log('多个feature气泡窗', popupObj.popupData) */
 
     let str = `
         <p>${popupObj.name}</p>
         <p>类型: ${popupObj.type === 'Marker' ? '标注点' : '扇区'}</p>
     `
 
+    let currentDataList = []
+
+    // console.log(popupObj.popupData)
     popupObj.popupData.forEach(item=> {
-        let currentData = []
+        let currentData = {}
 
         switch(popupObj.type) {
             case 'Marker': 
@@ -109,12 +112,24 @@ export const featuresPopupInner = (popupObj)=> {
                 currentData = item.get('curveData')
                 break;
         }
-        console.log("feature业务数据", currentData)
+        // console.log("feature业务数据000", currentData)
+        currentDataList.push(currentData)
+
+        switch (currentData.networkType) {
+            case '4g':
+                currentData.newCellName = currentData.cellName
+                break
+            case '5g':
+                currentData.newCellName = currentData.nrCellName
+                break
+        }
 
         str+= `
-            <p>cgi:${currentData.cgi}</p>
+            <p data-function='getSingleByFeatures' data-cgi='${currentData.cgi}'>cgi:${currentData.cgi}</p>
         `
     })
+
+    next(currentDataList)  // 输出业务数据
 
     return str
 }

@@ -32,6 +32,7 @@ import { queryCellByCgi } from "@/api/gis/gis";
 let isShowPopup = ref(false)
 let currentPopupObj = {}
 let refPopupDetailDialog = ref(null)
+let featuresPopupDom = {}
 
 const showPopup = () => {
     isShowPopup.value = true
@@ -47,9 +48,9 @@ const setPointPopup = (olMap, e, popupData) => {
     console.log('点击标注弹出气泡', olMap)
 
     // 使用变量存储弹窗所需的 DOM 对象
-    var container = document.getElementById('popup');
-    var closer = document.getElementById('popup-closer');
-    var content = document.getElementById('popup-content');
+    let container = document.getElementById('popup');
+    let closer = document.getElementById('popup-closer');
+    let content = document.getElementById('popup-content');
 
     // 经纬度
     let coordinate = transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
@@ -79,9 +80,9 @@ const setCurvePopup = (olMap, e, popupData) => {
     console.log('点击扇形弹出气泡', olMap)
 
     // 使用变量存储弹窗所需的 DOM 对象
-    var container = document.getElementById('popup');
-    var closer = document.getElementById('popup-closer');
-    var content = document.getElementById('popup-content');
+    let container = document.getElementById('popup');
+    let closer = document.getElementById('popup-closer');
+    let content = document.getElementById('popup-content');
 
     // test
     let coordinate = transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
@@ -110,9 +111,9 @@ const setCommonPopup = (olMap, e, popupData) => {
     console.log('点击标注弹出气泡', olMap)
 
     // 使用变量存储弹窗所需的 DOM 对象
-    var container = document.getElementById('popup');
-    var closer = document.getElementById('popup-closer');
-    var content = document.getElementById('popup-content');
+    let container = document.getElementById('popup');
+    let closer = document.getElementById('popup-closer');
+    let content = document.getElementById('popup-content');
 
     // 经纬度
     let coordinate = transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
@@ -128,6 +129,15 @@ const setCommonPopup = (olMap, e, popupData) => {
     // console.log(22222, popupObj)
     currentPopupObj = popupObj
 
+    switch (currentPopupObj.popupData.networkType) {
+        case '4g':
+            currentPopupObj.popupData.newCellName = currentPopupObj.popupData.cellName
+            break
+        case '5g':
+            currentPopupObj.popupData.newCellName = currentPopupObj.popupData.nrCellName
+            break
+    }
+
     /* mapUtils.setPopup(olMap, e, container, closer, content, popupInner.pointPopupInner(popupObj), event => {
         popupClickEvent(event)
     }) */
@@ -142,11 +152,11 @@ const setFeaturesPopup = (olMap, e, popupData) => {
     console.log('点击扇形弹出气泡', olMap)
 
     // 使用变量存储弹窗所需的 DOM 对象
-    var container = document.getElementById('popup');
-    var closer = document.getElementById('popup-closer');
-    var content = document.getElementById('popup-content');
+    let container = document.getElementById('popup');
+    let closer = document.getElementById('popup-closer');
+    let content = document.getElementById('popup-content');
 
-    // test
+    // 经纬度
     let coordinate = transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
     // 点击尺 （这里是尺(米)，并不是经纬度）;
     let hdms = toStringHDMS(toLonLat(e.coordinate)); // 转换为经纬度显示
@@ -158,10 +168,22 @@ const setFeaturesPopup = (olMap, e, popupData) => {
         coordinate,  // 坐标
         popupData  // 窗口业务数据 - 这里指所有的feature
     }
+    // console.log(popupObj)
+    currentPopupObj = popupObj
 
-    mapUtils.setPopup(olMap, e, container, closer, content, popupInner.featuresPopupInner(popupObj), event => {
-        popupClickEvent(event, popupObj.popupData)
+    mapUtils.setPopup(olMap, e, container, closer, content, popupInner.featuresPopupInner(popupObj, currentDataList => {
+        // console.log(currentData)
+        // currentPopupObj.popupData = currentData
+
+        // console.log("输出业务数据", currentDataList)
+
+        currentPopupObj.currentDataList = currentDataList
+    }), event => {
+        popupClickEvent(event)
     })
+
+    featuresPopupDom = content.innerHTML
+    // console.log(featuresPopupDom)
 }
 
 // 气泡弹出窗点击事件
@@ -176,30 +198,66 @@ const popupClickEvent = async (e) => {
 
     // 点击气泡窗获取更多
     if (dataFunction === 'getMore') {
-        console.log('点击气泡窗获取更多11', currentPopupObj)
-        // mittBus.emit('getMore', ruleForm.value.contactType)
-
-        // 或者走接口,根据cgi获取详情
-        const currentPopupAsyncObj = await apiCommon(queryCellByCgi, { cgi: currentPopupObj.popupData.cgi })
-        // console.log(currentPopupAsyncObj)
-        // currentPopupObj
-
-        switch (currentPopupAsyncObj.data.networkType) {
-            case '4g':
-                currentPopupObj = currentPopupAsyncObj.data.cell4g
-                currentPopupObj.networkType = '4g'
-                currentPopupObj.newCellName = currentPopupObj.cellName
-                break
-            case '5g':
-                currentPopupObj = currentPopupAsyncObj.data.cell5g
-                currentPopupObj.networkType = '5g'
-                currentPopupObj.newCellName = currentPopupObj.nrCellName
-                break
-        }
-
-        refPopupDetailDialog.value.show(currentPopupObj)
+        getMore()
     }
 
+    // 点击cgi显示具体气泡信息
+    if (dataFunction === 'getSingleByFeatures') {
+        // console.log(target.getAttribute("data-cgi"))
+        getSingleByFeatures(target.getAttribute("data-cgi"))
+    }
+
+    // 点击popupDom返回
+    if (dataFunction === 'popupBack') {
+        popupBack()
+    }
+}
+
+// 点击气泡窗获取更多
+const getMore = async () => {
+    console.log('点击气泡窗获取更多11', currentPopupObj)
+    // mittBus.emit('getMore', ruleForm.value.contactType)
+
+    // 或者走接口,根据cgi获取详情
+    const currentPopupAsyncObj = await apiCommon(queryCellByCgi, { cgi: currentPopupObj.popupData.cgi })
+
+    switch (currentPopupAsyncObj.data.networkType) {
+        case '4g':
+            currentPopupObj = currentPopupAsyncObj.data.cell4g
+            currentPopupObj.networkType = '4g'
+            currentPopupObj.newCellName = currentPopupObj.cellName
+            break
+        case '5g':
+            currentPopupObj = currentPopupAsyncObj.data.cell5g
+            currentPopupObj.networkType = '5g'
+            currentPopupObj.newCellName = currentPopupObj.nrCellName
+            break
+    }
+
+    refPopupDetailDialog.value.show(currentPopupObj)
+}
+
+// 点击cgi显示具体气泡信息
+const getSingleByFeatures = (cgi) => {
+    console.log('点击cgi显示具体气泡信息', currentPopupObj)
+
+    currentPopupObj.popupData = currentPopupObj.currentDataList.filter(item => item.cgi === cgi)[0]
+    // console.log(currentPopupObj.popupData)
+
+    let content = document.getElementById('popup-content');
+
+    content.innerHTML = popupInner.commonPopupInner(currentPopupObj)
+    const backDom = document.createElement("b")
+    console.log(backDom)
+    backDom.setAttribute('data-function', 'popupBack');
+    backDom.innerHTML = 'back'
+    content.appendChild(backDom)
+}
+
+// 点击popupDom返回
+const popupBack = () => {
+    let content = document.getElementById('popup-content');
+    content.innerHTML = featuresPopupDom
 }
 
 /**
@@ -281,6 +339,8 @@ $popupBg: rgba(111, 168, 247, 0.8);
         p {
             font-size: 12px;
             color: #514b4b;
+            margin-bottom: 8px;
+            cursor: pointer;
         }
     }
 }
