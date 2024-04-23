@@ -2,7 +2,7 @@
   <el-dialog width="740px" v-model="showDialog" :close-on-click-modal="false" :modal-append-to-body="false"
     :close-on-press-escape="false">
     <template #header>
-      <span>{{ currentPopupData.cellName }}</span>
+      <span>{{ currentPopupData.newCellName }}</span>
     </template>
     <div class="container">
       {{ currentPopupData }}
@@ -27,8 +27,8 @@ const currentPopupData = ref(null)
 const show = (val) => {
   showDialog.value = true
 
-  const { popupData } = val
-  currentPopupData.value = popupData
+  // const { popupData } = val
+  currentPopupData.value = val
 }
 
 defineExpose({ show })

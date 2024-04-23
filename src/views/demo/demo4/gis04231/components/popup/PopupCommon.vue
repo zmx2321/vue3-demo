@@ -24,9 +24,9 @@ import { toStringHDMS } from 'ol/coordinate';
 import mittBus from '@/utils/mittBus' // mitt
 // 组件
 import PopupDetailDialog from './PopupDetailDialog.vue'
-/* // api相关
+// api相关
 import { apiCommon } from '@/utils/index.js'
-import { queryCellByCgi } from "@/api/gis/gis"; */
+import { queryCellByCgi } from "@/api/gis/gis";
 
 // 如果popup不设置overflow的话,会在左下角显示,这里在一开始进行隐藏
 let isShowPopup = ref(false)
@@ -176,13 +176,26 @@ const popupClickEvent = async (e) => {
 
     // 点击气泡窗获取更多
     if (dataFunction === 'getMore') {
-        console.log('点击气泡窗获取更多', currentPopupObj)
+        console.log('点击气泡窗获取更多11', currentPopupObj)
         // mittBus.emit('getMore', ruleForm.value.contactType)
 
-        /* // 或者走接口,根据cgi获取详情
-        currentPopupObj = await apiCommon(queryCellByCgi, { cgi: currentPopupObj.popupData.cgi })
-        console.log(currentPopupObj) */
+        // 或者走接口,根据cgi获取详情
+        const currentPopupAsyncObj = await apiCommon(queryCellByCgi, { cgi: currentPopupObj.popupData.cgi })
+        // console.log(currentPopupAsyncObj)
+        // currentPopupObj
 
+        switch (currentPopupAsyncObj.data.networkType) {
+            case '4g':
+                currentPopupObj = currentPopupAsyncObj.data.cell4g
+                currentPopupObj.networkType = '4g'
+                currentPopupObj.newCellName = currentPopupObj.cellName
+                break
+            case '5g':
+                currentPopupObj = currentPopupAsyncObj.data.cell5g
+                currentPopupObj.networkType = '5g'
+                currentPopupObj.newCellName = currentPopupObj.nrCellName
+                break
+        }
 
         refPopupDetailDialog.value.show(currentPopupObj)
     }

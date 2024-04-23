@@ -225,6 +225,15 @@ const setMapBySingleData = (olMap, itemData) => {
 const gisDataAsync = async (params, next, isMerge) => {
     let gisData = await apiCommon(lgApi.queryGisList, params)
     gisData = gisData.data
+    // console.log("44444", gisData)
+
+    /* gisData.cell4gList.forEach(item => {
+        item.networkType = '4g'
+    })
+    gisData.cell5gList.forEach(item => {
+        item.networkType = '5g'
+    }) */
+    // console.log(gisData)
 
     if (isMerge) {
         next([...gisData.cell4gList, ...gisData.cell4gList])
@@ -244,6 +253,7 @@ const reflashCurrentMapByType = (next) => {
 
     gisDataAsync(params, gisDataList => {
         const { cell4gList, cell5gList } = gisDataList
+        // console.log(cell4gList, cell5gList)
 
         // 加载数据
         switch (currentContactType) {
@@ -377,10 +387,10 @@ const getCurrentViewData = (olMap) => {
         ...getCurrentPositionParams(olMap),
         'networkType': 'all'
     }
-    // console.log(params)
+    console.log(params)
 
     gisDataAsync(params, gisDataList => {
-        // console.log("2222", gisDataList)
+        console.log("2222", gisDataList)
 
         const { cell4gList, cell5gList } = gisDataList
         renderFeatureByData(olMap, cell4gList)
