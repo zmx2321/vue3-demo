@@ -44,6 +44,8 @@
                 </template>
             </el-autocomplete>
         </el-form-item>
+
+        <test />
     </el-form>
 </template>
 
@@ -52,9 +54,12 @@ import { ref } from 'vue'
 // 组件传参
 import mittBus from '@/utils/mittBus' // mitt
 // store
-import { gisDataStore } from '@/store/modules/gis.js'
+// import { gisDataStore } from '@/store/modules/gis.js'
+// api相关
+import { apiCommon } from '@/utils/index.js'
+import { queryCellListByCellName } from "@/api/gis/gis";
 
-const gisStoreData = gisDataStore()
+// const gisStoreData = gisDataStore()
 
 const ruleFormRef = ref(null)
 const isShowFocus = ref(false)  // 是否直接显示下拉
@@ -77,6 +82,7 @@ const ruleForm = ref({
     coverType: '',  // 基站类型
     searchType: searchCriteriaList.value[0].prop,  // 搜索条件,默认cgi
     // dynamicFieldsValue: ''  // 动态字段结果
+    // dynamicFieldsValue: 'H949990-宁波江北奥体中心体育馆内场临时EasyMarco-HLH-D101-65'  // 动态字段结果
     // dynamicFieldsValue: '460-00-815600-69'  // 动态字段结果 - 室外cgi测试
     dynamicFieldsValue: '460-00-405194-1'  // 动态字段结果 - 室内cgi测试
 })
@@ -87,25 +93,13 @@ let resData = ref([])  // 搜索下拉框结果数据
  * 接收其他组件派发的方法
  */
 //  获取小区名称列表
-mittBus.on('getCellNameSelectData', async (cellNameList) => {
-    console.log("获取小区名称列表", cellNameList)
+/* mittBus.on('getCellNameSelectData', async (cellNameList) => {
+    // console.log("获取小区名称列表", cellNameList)
     isShowFocus.value = true
 
     resData.value = cellNameList
-})
+}) */
 
-/**
- * tools
- */
-// 自动补全输入框
-const createFilter = (queryString) => {
-    // console.log(queryString, restaurant)
-    return (restaurant) => {
-        return (
-            restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-        )
-    }
-}
 
 /**
  * 业务
@@ -154,33 +148,81 @@ const setGisSearchSubmit = () => {
 }
 
 // 根据网络制式选择数据
-const querySearch = (queryString, cb) => {
-    // console.log('32432', queryString, resData.value, ruleForm.value.searchType)
+const querySearch = async (queryString, cb) => {
 
-    searchCriteriaList.value.forEach(item => {
+    searchCriteriaList.value.forEach(async item => {
         // 识别当前搜索条件
         if (item.prop === ruleForm.value.searchType) {
             // 如果不需要模糊搜索不显示下拉框
             if (!item.isShowSelect) {
-                resData.value = []
+                cb([])
             } else {
-                setGisSearchSubmit()
+                let params = {
+                    cellName: queryString
+                }
+                let gisData = await apiCommon(queryCellListByCellName, params)
 
-                // resData.value = loadAll()
-                setTimeout(() => {
-                    resData.value = gisStoreData.gisSearchOptionData
-                    console.log("6666666", gisStoreData.gisSearchOptionData)
-                }, 5000)
+                gisData.data.forEach(item => {
+                    item.value = item.cellName
+                })
 
+                // resData.value = gisData.data
+                cb(gisData.data)
             }
         }
     })
 
-    const results = queryString
-        ? resData.value.filter(createFilter(queryString))
-        : resData.value
 
-    cb(results)
+
+
+
+    /* clearTimeout(timeout)
+    timeout = setTimeout(() => {
+        cb(results)
+    }, 3000 * Math.random()) */
+    // console.log('32432', queryString, resData.value, ruleForm.value.searchType)
+
+    // searchCriteriaList.value.forEach(async item => {
+    //     // 识别当前搜索条件
+    //     if (item.prop === ruleForm.value.searchType) {
+    //         // 如果不需要模糊搜索不显示下拉框
+    //         if (!item.isShowSelect) {
+    //             resData.value = []
+    //         } else {
+    //             let params = {
+    //                 cellName: queryString
+    //             }
+    //             let gisData = await apiCommon(queryCellListByCellName, params)
+    //             console.log(gisData)
+
+    //             gisData.data.forEach(item => {
+    //                 // item.newCellName = item.cellName
+    //                 item.value = item.cellName
+    //             })
+
+    //             resData.value = gisData.data
+    //             // resData.value = loadAll()
+    //             // cellName
+    //             // let gisData = await apiCommon(queryCellListByCellName, params)
+    //             // gisData = gisData.data
+    //             // console.log(gisData)
+    //             // setGisSearchSubmit()
+
+    //             // resData.value = loadAll()
+    //             /* setTimeout(() => {
+    //                 resData.value = gisStoreData.gisSearchOptionData
+    //                 console.log("6666666", gisStoreData.gisSearchOptionData)
+    //             }, 5000) */
+
+    //         }
+    //     }
+    // })
+
+    // const results = queryString
+    //     ? resData.value.filter(createFilter(queryString))
+    //     : resData.value
+
+    // cb(results)
 }
 
 // 搜索框下拉选择

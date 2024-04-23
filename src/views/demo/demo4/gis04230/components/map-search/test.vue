@@ -6,9 +6,23 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 
+// api相关
+import { apiCommon } from '@/utils/index.js'
+import { queryCellListByCellName } from "@/api/gis/gis";
+
 const state = ref('')
 
 const links = ref([])
+
+const testapi = async () => {
+    let params = {
+        cellName: state.value
+    }
+    let gisData = await apiCommon(queryCellListByCellName, params)
+    console.log(gisData)
+
+    return gisData.data
+}
 
 const loadAll = () => {
     return [
@@ -24,14 +38,32 @@ const loadAll = () => {
 
 let timeout
 const querySearchAsync = (queryString, cb) => {
+    /* let aa = testapi()
+
+    aa.then(datalist=> {
+        console.log(aa)
+    }) */
+    // testapi()
     const results = queryString
         ? links.value.filter(createFilter(queryString))
         : links.value
 
-    clearTimeout(timeout)
+    console.log(results)
+
+    /* clearTimeout(timeout)
     timeout = setTimeout(() => {
         cb(results)
-    }, 3000 * Math.random())
+    }, 3000 * Math.random()) */
+
+    testapi().then(res => {
+        console.log(res)
+
+        res.forEach(item => {
+            item.value = item.cellName
+        })
+
+        cb(res)
+    })
 }
 const createFilter = (queryString) => {
     return (restaurant) => {

@@ -169,6 +169,15 @@ const setSingleFeatureStyle = (feature) => {
 const setMapBySingleData = (olMap, itemData) => {
     console.log('通过单条数据设置地图', olMap, itemData)
 
+    switch (itemData.networkType) {
+        case '4g':
+            itemData.newCellName = itemData.cellName
+            break
+        case '5g':
+            itemData.newCellName = itemData.nrCellName
+            break
+    }
+
     // 选择数据隐藏气泡
     refPopupCommon.value.hidePopup()
 
@@ -287,13 +296,16 @@ const searchByCGIAsync = async (cgi) => {
         proxy.$modal.msgError(gisData.msg);
     } else {
         gisData = gisData.data
+        console.log(gisData)
     }
 
     switch (gisData.networkType) {
         case '4g':
+            gisData.cell4g.networkType = '4g'
             setMapBySingleData(myOlMap, gisData.cell4g)
             break
         case '5g':
+            gisData.cell5g.networkType = '5g'
             setMapBySingleData(myOlMap, gisData.cell5g)
             break
     }
@@ -336,27 +348,18 @@ mittBus.on('searchByCGI', async cgi => {
 })
 // 根据小区名称搜索
 mittBus.on('searchByCellName', async cellName => {
-    // console.log('根据小区名称搜索', cellName)
+    console.log('根据小区名称搜索', cellName)
 
     let params = {
         cellName
     }
     let gisData = await apiCommon(lgApi.queryCellListByCellName, params)
     gisData = gisData.data
+    console.log(gisData)
 
-    gisData.forEach(item => {
-        item.value = item.cellName
-    })
-
-    setGisSearchOptionData(gisData)
-
-    switch (gisData.networkType) {
-        case '4g':
-            setMapBySingleData(myOlMap, gisData.cell4g)
-            break
-        case '5g':
-            setMapBySingleData(myOlMap, gisData.cell5g)
-            break
+    // 如果只有一条数据
+    if (gisData.length === 1) {
+        searchByCGIAsync(gisData[0].cgi)  // 根据cgi搜索详情
     }
 })
 // 搜索框下拉选择

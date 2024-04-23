@@ -223,18 +223,18 @@ const getMore = async () => {
 
     switch (currentPopupAsyncObj.data.networkType) {
         case '4g':
-            currentPopupObj = currentPopupAsyncObj.data.cell4g
-            currentPopupObj.networkType = '4g'
-            currentPopupObj.newCellName = currentPopupObj.cellName
+            currentPopupObj.popupData = currentPopupAsyncObj.data.cell4g
+            currentPopupObj.popupData.networkType = '4g'
+            currentPopupObj.popupData.newCellName = currentPopupObj.cellName
             break
         case '5g':
-            currentPopupObj = currentPopupAsyncObj.data.cell5g
-            currentPopupObj.networkType = '5g'
-            currentPopupObj.newCellName = currentPopupObj.nrCellName
+            currentPopupObj.popupData = currentPopupAsyncObj.data.cell5g
+            currentPopupObj.popupData.networkType = '5g'
+            currentPopupObj.popupData.newCellName = currentPopupObj.nrCellName
             break
     }
 
-    refPopupDetailDialog.value.show(currentPopupObj)
+    refPopupDetailDialog.value.show(currentPopupObj.popupData)
 }
 
 // 点击cgi显示具体气泡信息
