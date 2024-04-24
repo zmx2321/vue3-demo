@@ -45,7 +45,7 @@ import BaseInfo from './BaseInfo.vue';
 import LayerManager from './LayerManager.vue';
 import mittBus from '@/utils/mittBus' // mitt
 
-let isShowSearch = ref('block')  // 搜索框默认隐藏 - 控制scss样式
+let isShowSearch = ref('none')  // 搜索框默认隐藏 - 控制scss样式
 // let isShowSearch = ref('none')  // 搜索框默认隐藏 - 控制scss样式
 
 /**

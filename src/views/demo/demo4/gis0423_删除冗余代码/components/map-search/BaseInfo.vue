@@ -60,7 +60,6 @@ import { queryCellListByCellName } from "@/api/gis/gis";
 // const gisStoreData = gisDataStore()
 
 const ruleFormRef = ref(null)
-const isShowFocus = ref(false)  // 是否直接显示下拉
 
 // 搜索条件
 const searchCriteriaList = ref([{
@@ -86,18 +85,6 @@ const ruleForm = ref({
 })
 
 let resData = ref([])  // 搜索下拉框结果数据
-
-/**
- * 接收其他组件派发的方法
- */
-//  获取小区名称列表
-/* mittBus.on('getCellNameSelectData', async (cellNameList) => {
-    // console.log("获取小区名称列表", cellNameList)
-    isShowFocus.value = true
-
-    resData.value = cellNameList
-}) */
-
 
 /**
  * 业务

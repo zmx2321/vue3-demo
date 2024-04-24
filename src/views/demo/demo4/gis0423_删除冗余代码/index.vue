@@ -385,7 +385,7 @@ const mapEvent = (olMap) => {
 
             // 多个feature
             if (featureList.length > 1) {
-                console.log('有重叠,多个feature', featureList)
+                // console.log('有重叠,多个feature', featureList)
 
                 // 点击扇形弹出气泡
                 refPopupCommon.value.setFeaturesPopup(olMap, e, featureList)
@@ -421,9 +421,6 @@ const singleFeaturesClick = (olMap, featureList, e) => {
 
             popupData = feature.get('pointData')
             // console.log('获取点标注数据', popupData)
-
-            // 点击标注弹出气泡
-            // refPopupCommon.value.setPointPopup(olMap, e, popupData)
         }
 
         // 点击扇形区域
@@ -432,9 +429,6 @@ const singleFeaturesClick = (olMap, featureList, e) => {
 
             popupData = feature.get('curveData')
             // console.log('获取扇形区数据', popupData)
-
-            // 点击扇形弹出气泡
-            // refPopupCommon.value.setCurvePopup(olMap, e, popupData)
         }
 
         refPopupCommon.value.setCommonPopup(olMap, e, popupData)

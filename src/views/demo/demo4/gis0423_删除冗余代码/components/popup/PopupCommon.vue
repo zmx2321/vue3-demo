@@ -12,7 +12,7 @@
 
 <script setup>
 // vue core
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 // map data
 import * as popupInner from './popupInner'
 // map core
@@ -39,72 +39,8 @@ const showPopup = () => {
 }
 
 const hidePopup = () => {
-    // console.log('隐藏Popup')
     isShowPopup.value = false
 }
-
-// 点击标注弹出气泡
-/* const setPointPopup = (olMap, e, popupData) => {
-    console.log('点击标注弹出气泡', olMap)
-
-    // 使用变量存储弹窗所需的 DOM 对象
-    let container = document.getElementById('popup');
-    let closer = document.getElementById('popup-closer');
-    let content = document.getElementById('popup-content');
-
-    // 经纬度
-    let coordinate = transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
-    // 点击尺 （这里是尺(米)，并不是经纬度）;
-    let hdms = toStringHDMS(toLonLat(e.coordinate)); // 转换为经纬度显示
-
-    const popupObj = {
-        name: '标注气泡窗',
-        hdms,
-        coordinate,
-        popupData  // 气泡窗业务数据
-    }
-    // console.log(22222, popupObj)
-    currentPopupObj = popupObj
-
-    // mapUtils.setPopup(olMap, e, container, closer, content, popupInner.pointPopupInner(popupObj), event => {
-    //     popupClickEvent(event)
-    // })
-
-    mapUtils.setPopup(olMap, e, container, closer, content, popupInner.commonPopupInner(popupObj), event => {
-        popupClickEvent(event)
-    })
-} */
-
-// 点击扇形弹出气泡
-/* const setCurvePopup = (olMap, e, popupData) => {
-    console.log('点击扇形弹出气泡', olMap)
-
-    // 使用变量存储弹窗所需的 DOM 对象
-    let container = document.getElementById('popup');
-    let closer = document.getElementById('popup-closer');
-    let content = document.getElementById('popup-content');
-
-    // test
-    let coordinate = transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
-    // 点击尺 （这里是尺(米)，并不是经纬度）;
-    let hdms = toStringHDMS(toLonLat(e.coordinate)); // 转换为经纬度显示
-
-    const popupObj = {
-        name: '扇形气泡窗',
-        hdms,
-        coordinate,
-        popupData
-    }
-    currentPopupObj = popupObj
-
-    // mapUtils.setPopup(olMap, e, container, closer, content, popupInner.curvePopupInner(popupObj), event => {
-    //     popupClickEvent(event)
-    // })
-
-    mapUtils.setPopup(olMap, e, container, closer, content, popupInner.commonPopupInner(popupObj), event => {
-        popupClickEvent(event)
-    })
-} */
 
 // 通用信息展示弹窗
 const setCommonPopup = (olMap, e, popupData) => {
@@ -161,7 +97,9 @@ const setFeaturesPopup = (olMap, e, popupData) => {
     let hdms = toStringHDMS(toLonLat(e.coordinate)); // 转换为经纬度显示
 
     const popupObj = {
-        name: popupData.length + '个重叠feature',
+        // name: popupData.length + '个重叠feature',
+        // name: `${popupData.length}个重叠 ${popupData[0].get('type') === 'Marker' ? '标注点' : '扇区'}`,
+        name: popupData.length + '个重叠要素',
         type: popupData[0].get('type'),
         hdms,  // 经纬度
         coordinate,  // 坐标
@@ -198,6 +136,7 @@ const popupClickEvent = async (e) => {
     // 点击cgi显示具体气泡信息
     if (dataFunction === 'getSingleByFeatures') {
         // console.log(target.getAttribute("data-cgi"))
+
         getSingleByFeatures(target.getAttribute("data-cgi"))
     }
 
@@ -219,20 +158,21 @@ const getMore = async () => {
         case '4g':
             currentPopupObj.popupData = currentPopupAsyncObj.data.cell4g
             currentPopupObj.popupData.networkType = '4g'
-            currentPopupObj.popupData.newCellName = currentPopupObj.cellName
+            currentPopupObj.popupData.newCellName = currentPopupObj.popupData.cellName
             break
         case '5g':
             currentPopupObj.popupData = currentPopupAsyncObj.data.cell5g
             currentPopupObj.popupData.networkType = '5g'
-            currentPopupObj.popupData.newCellName = currentPopupObj.nrCellName
+            currentPopupObj.popupData.newCellName = currentPopupObj.popupData.nrCellName
             break
     }
 
+    // console.log(currentPopupObj.popupData)
     refPopupDetailDialog.value.show(currentPopupObj.popupData)
 }
 
 // 点击cgi显示具体气泡信息
-const getSingleByFeatures = (cgi) => {
+const getSingleByFeatures = cgi => {
     // console.log('点击cgi显示具体气泡信息', currentPopupObj)
 
     currentPopupObj.popupData = currentPopupObj.currentDataList.filter(item => item.cgi === cgi)[0]
@@ -243,7 +183,9 @@ const getSingleByFeatures = (cgi) => {
     content.innerHTML = popupInner.commonPopupInner(currentPopupObj)
     const backDom = document.createElement("b")
     backDom.setAttribute('data-function', 'popupBack');
-    backDom.innerHTML = 'back'
+    backDom.setAttribute('title', '返回');
+    // backDom.innerHTML = 'back'
+    backDom.innerHTML = ''
     content.appendChild(backDom)
 }
 
@@ -259,15 +201,14 @@ const popupBack = () => {
 defineExpose({
     showPopup,
     hidePopup,
-    // setPointPopup,
-    // setCurvePopup,
     setCommonPopup,
     setFeaturesPopup
 })
 </script>
 
 <style lang="scss" scoped>
-$popupBg: rgba(111, 168, 247, 0.8);
+// $popupBg: rgba(111, 168, 247, 0.8);
+$popupBg: rgba(255, 255, 255, 0.8);
 
 .ol-popup {
     position: absolute;
@@ -275,7 +216,7 @@ $popupBg: rgba(111, 168, 247, 0.8);
     bottom: 12px;
     padding: 15px;
     background: $popupBg;
-    min-width: 200px;
+    min-width: 256px;
     max-height: 200px;
 
     /* &.popup_toggle {
@@ -283,6 +224,7 @@ $popupBg: rgba(111, 168, 247, 0.8);
     } */
 
     .popup_wrap {
+        margin-top: 10px;
         width: 100%;
         max-height: 170px;
         overflow: auto;
@@ -315,8 +257,8 @@ $popupBg: rgba(111, 168, 247, 0.8);
 
     .ol-popup-closer {
         position: absolute;
-        top: 1px;
-        right: 3px;
+        top: 3px;
+        right: 6px;
         width: 10px;
         height: 10px;
         cursor: pointer;
@@ -326,14 +268,113 @@ $popupBg: rgba(111, 168, 247, 0.8);
         }
     }
 
+    /**
+     * 此处开始气泡窗内容样式
+     */
     :deep .popup-content {
-        color: #2c2c2c;
+        margin-right: 8px;
 
-        p {
+        p,
+        span,
+        h3,
+        li,
+        dt,
+        dd {
             font-size: 12px;
             color: #514b4b;
-            margin-bottom: 8px;
+            // cursor: pointer;
+        }
+
+        // 重叠feature气泡窗样式
+        ul.features_top {
+            li {
+                margin-bottom: 5px;
+                // color: #494949;
+                color: #222222;
+            }
+        }
+
+        .feature_item {
+            margin-bottom: 10px;
+            padding: 6px;
+            transition: .2s linear;
+            border-bottom: dashed 1px #707070;
+            border-radius: 3px 3px 0 0;
             cursor: pointer;
+
+            &:hover {
+                background: rgb(193 231 254 / 80%);
+                transition: .3s linear;
+            }
+
+            span {
+                display: block;
+            }
+
+            dl {
+
+                dt,
+                dd {
+                    display: inline-block;
+                }
+            }
+        }
+
+        // 通用气泡窗样式
+        .common_popup_item {
+            position: relative;
+
+            // background: #f00;
+            h3 {
+                margin-bottom: 10px;
+                color: #494949;
+            }
+
+            ul {
+                li {
+                    margin-bottom: 3px;
+
+                    dl {
+
+                        dt,
+                        dd {
+                            display: inline-block;
+                        }
+
+                        dt {
+                            margin-right: 3px;
+                        }
+                    }
+                }
+            }
+
+            span {
+                position: absolute;
+                right: -5px;
+                bottom: -33px;
+                padding: 6px 10px;
+                background: #70b5fa;
+                color: #fff;
+                border-radius: 6px;
+                transition: 0.2s linear;
+                cursor: pointer;
+
+                &:hover {
+                    background: #2c94fe;
+                    transition: .3s linear;
+                }
+            }
+
+            &+b {
+                position: absolute;
+                top: 4px;
+                left: 8px;
+                width: 17px;
+                height: 20px;
+                background: url("../../icon/back.svg") center center no-repeat;
+                background-size: 100% 100%;
+                cursor: pointer;
+            }
         }
     }
 }
