@@ -6,7 +6,7 @@
 export const staticRouter = [
   {
     path: '/',
-    redirect: '/demo/demo4'
+    redirect: '/demo/demo5'
   },
   {
     path: '/demo/screen',

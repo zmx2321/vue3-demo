@@ -7,17 +7,14 @@
 </template>
 
 <script setup>
-import { getCurrentInstance } from "vue";
-
-const { proxy } = getCurrentInstance();
-console.log(proxy)
+import { ElMessage } from 'element-plus'
 
 const copyTextToClipboard = async (text) => {
   try {
     await navigator.clipboard.writeText(text);
     console.log("Text copied to clipboard");
 
-    proxy.$modal.msgSuccess(`${text} 拷贝成功`);
+    ElMessage.success(`${text} 拷贝成功`);
   } catch (err) {
     console.error("Failed to copy: ", err);
   }
