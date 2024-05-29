@@ -11,7 +11,7 @@ export const staticRouter = [
   {
     path: '/demo/screen',
     name: 'screen',
-    component: () => import('@/views/demo/screen/index.vue'),
+    component: () => import('@/views/demo/screen/index.vue')
   },
   {
     path: '/home',
@@ -67,6 +67,15 @@ export const staticRouter = [
           keepAlive: true
         },
         component: () => import('@/views/demo/demo4/index.vue')
+      },
+      {
+        path: '/demo/demo5',
+        name: 'Demo5',
+        meta: {
+          title: 'demo5',
+          keepAlive: true
+        },
+        component: () => import('@/views/demo/demo5/index.vue')
       }
     ]
   }
