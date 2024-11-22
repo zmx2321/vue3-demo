@@ -1,12 +1,7 @@
 <template>
   <section class="demo_cont">
     <div class="map_wrap">
-      <tab
-        ref="tabRef"
-        class="map_tab f-fl"
-        :tab-list="tabListData"
-        :current-index="currentIndex"
-        @checkTab="checkTab"
+      <tab ref="tabRef" class="map_tab f-fl" :tab-list="tabListData" :current-index="currentIndex" @checkTab="checkTab"
         v-if="tabListData.length !== 0" />
 
       <div id="glMap" class="gl_map_cont" v-loading="mapLoading"></div>
@@ -28,7 +23,7 @@ import MapLend from './components/MapLend.vue'
 /* import { http } from '@/api'
 import { showReqError } from '@/hooks/useError' */
 // mock
-import serverArea from './mapData/mock/serverArea.json'
+// import serverArea from './mapData/mock/serverArea.json'
 import * as popupConfig from './mapData/popupConfig'
 
 /**
@@ -76,7 +71,7 @@ onMounted(() => {
  */
 const initPage = () => {
   // 获取数据
-  getServerAreaMapData()
+  // getServerAreaMapData()
 }
 
 /**
@@ -508,6 +503,7 @@ $popupBg: rgba(12, 38, 77, 0.75);
   // 地图样式
   // :deep .maplibregl-map {
   background: #f00;
+
   // 气泡
   :deep .maplibregl-popup {
     max-width: 260px !important;
@@ -517,16 +513,19 @@ $popupBg: rgba(12, 38, 77, 0.75);
         border-bottom-color: $popupBg;
       }
     }
+
     &.maplibregl-popup-anchor-bottom {
       .maplibregl-popup-tip {
         border-top-color: $popupBg;
       }
     }
+
     &.maplibregl-popup-anchor-left {
       .maplibregl-popup-tip {
         border-right-color: $popupBg;
       }
     }
+
     &.maplibregl-popup-anchor-right {
       .maplibregl-popup-tip {
         border-left-color: $popupBg;
@@ -540,11 +539,12 @@ $popupBg: rgba(12, 38, 77, 0.75);
       background: rgba(12, 38, 77, 0.75);
       color: #fff;
 
-      & > button {
+      &>button {
         display: none;
       }
 
       .popupp_wrap {
+
         dt,
         dd,
         li,
@@ -560,6 +560,7 @@ $popupBg: rgba(12, 38, 77, 0.75);
 
           thead,
           tbody {
+
             th,
             td {
               padding: 2px 8px;
@@ -567,6 +568,7 @@ $popupBg: rgba(12, 38, 77, 0.75);
               &:first-child {
                 text-align: left;
               }
+
               &:last-child {
                 text-align: right;
               }
@@ -583,6 +585,7 @@ $popupBg: rgba(12, 38, 77, 0.75);
               }
             }
           }
+
           tbody {
             tr {
               td {
@@ -613,6 +616,7 @@ $popupBg: rgba(12, 38, 77, 0.75);
       }
     }
   }
+
   // }
 }
 </style>
