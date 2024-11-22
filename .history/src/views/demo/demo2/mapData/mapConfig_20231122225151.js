@@ -22,9 +22,9 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
   style: {
     version: 8,
     sources: {
-      ciccc: {
+      cico: {
         type: 'vector',
-        url: 'http://decision.cnciccc.com/gis/dist/styles/tiles/ciccc-map.json'
+        url: 'http://decision.cncico.com/gis/dist/styles/tiles/cico-map.json'
       },
       tianditu: {
         type: 'raster',
@@ -40,8 +40,8 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         generateId: true
       }
     },
-    glyphs: 'http://decision.cnciccc.com/gis/dist/fonts/{fontstack}/{range}.pbf',
-    sprite: 'http://decision.cnciccc.com/gis/dist/sprite/sprite',
+    glyphs: 'http://decision.cncico.com/gis/dist/fonts/{fontstack}/{range}.pbf',
+    sprite: 'http://decision.cncico.com/gis/dist/sprite/sprite',
     layers: [
       /* {
           "id": "background",
@@ -53,7 +53,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "land",
           "type": "fill",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562233264056352769",
           "paint": {
             "fill-color": {
@@ -82,7 +82,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "landuse_forestland",
           "type": "fill",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1561885517834928130",
           "minzoom": 4,
           "paint": {
@@ -110,7 +110,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "landcover_wood",
           "type": "fill",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1561885517834928130",
           "minzoom": 4,
           "paint": {
@@ -129,7 +129,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "landcover_grass",
           "type": "fill",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1561885517834928130",
           "minzoom": 4,
           "paint": {
@@ -148,7 +148,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "landuse_residential",
           "type": "fill",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1561885517834928130",
           "maxzoom": 24,
           "minzoom": 9,
@@ -182,7 +182,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "landuse_cemetery",
           "type": "fill",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1561885517834928130",
           "minzoom": 9,
           "filter": [
@@ -197,7 +197,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "water",
           "type": "fill",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1561883584248201217",
           "minzoom": 4,
           "paint": {
@@ -223,7 +223,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "province_outline",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1564080509093462018",
           "minzoom": 3,
           "layout": {
@@ -249,7 +249,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "tunnel_secondary_tertiary_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 8,
           "layout": {
@@ -303,7 +303,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "tunnel_trunk_primary_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 7,
           "layout": {
@@ -375,7 +375,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "tunnel_motorway_link_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 5,
           "layout": {
@@ -434,7 +434,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "tunnel_motorway_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 5,
           "layout": {
@@ -492,7 +492,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "tunnel_motorway_link",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 5,
           "layout": {
@@ -546,7 +546,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "tunnel_secondary_tertiary",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 8,
           "layout": {
@@ -599,7 +599,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "tunnel_trunk_primary",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 7,
           "layout": {
@@ -650,7 +650,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "tunnel_motorway",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 5,
           "layout": {
@@ -700,7 +700,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_trunk_primary_link_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 7,
           "layout": {
@@ -765,7 +765,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_motorway_link_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 10,
           "layout": {
@@ -821,7 +821,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_secondary_tertiary_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 8,
           "layout": {
@@ -872,7 +872,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_trunk_primary_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 7,
           "layout": {
@@ -941,7 +941,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_motorway_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 5,
           "layout": {
@@ -996,7 +996,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_trunk_primary_link",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 7,
           "layout": {
@@ -1048,7 +1048,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_motorway_link",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 10,
           "layout": {
@@ -1103,7 +1103,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_secondary_tertiary",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 8,
           "layout": {
@@ -1157,7 +1157,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_trunk_primary",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 7,
           "layout": {
@@ -1209,7 +1209,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_motorway",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 5,
           "layout": {
@@ -1260,7 +1260,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "bridge_motorway_link_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 5,
           "layout": {
@@ -1314,7 +1314,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "bridge_secondary_tertiary_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 8,
           "layout": {
@@ -1363,7 +1363,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "bridge_trunk_primary_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 7,
           "layout": {
@@ -1430,7 +1430,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "bridge_motorway_casing",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 5,
           "layout": {
@@ -1483,7 +1483,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "bridge_motorway_link",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 5,
           "layout": {
@@ -1536,7 +1536,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "bridge_secondary_tertiary",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 8,
           "layout": {
@@ -1588,7 +1588,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "bridge_trunk_primary",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 7,
           "layout": {
@@ -1639,7 +1639,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "bridge_motorway",
           "type": "line",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 5,
           "layout": {
@@ -1688,7 +1688,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_oneway",
           "type": "symbol",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 15,
           "layout": {
@@ -1735,7 +1735,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_oneway_opposite",
           "type": "symbol",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 15,
           "layout": {
@@ -1782,7 +1782,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "road_label",
           "type": "symbol",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562240792513265666",
           "minzoom": 13,
           "layout": {
@@ -1829,7 +1829,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "place_other",
           "type": "symbol",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562597969350410241",
           "minzoom": 10,
           "layout": {
@@ -1877,7 +1877,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "place_village",
           "type": "symbol",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562597859849715713-1",
           "minzoom": 10,
           "layout": {
@@ -1918,7 +1918,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "place_town",
           "type": "symbol",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562597969350410241",
           "minzoom": 8,
           "layout": {
@@ -1959,7 +1959,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "place_county",
           "type": "symbol",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562597969350410241",
           "minzoom": 5,
           "maxzoom": 12,
@@ -2005,7 +2005,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "place_city",
           "type": "symbol",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562597969350410241",
           "minzoom": 5,
           "maxzoom": 10,
@@ -2068,7 +2068,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
         {
           "id": "place_province",
           "type": "symbol",
-          "source": "ciccc",
+          "source": "cico",
           "source-layer": "1562597969350410241",
           "minzoom": 3,
           "maxzoom": 7,
@@ -2109,7 +2109,7 @@ export const glMapConfig = (id, geoData, center, zoom) => ({
       {
         id: 'place_country',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562597969350410241',
         layout: {
           'text-font': ['NotoSansSCRegular'],
@@ -2268,14 +2268,14 @@ export const glMapConfigTest0 = (id, geoData, center, zoom) => ({
       [SOURCES.WMS]: {
         type: 'raster',
         tiles: [
-          `http://decision.cnciccc.com/cicccmap/wms?${
+          `http://decision.cncico.com/cicomap/wms?${
             // eslint-disable-next-line no-undef
             qs.stringify(
               {
                 service: 'WMS',
                 version: '1.1.0',
                 request: 'GetMap',
-                layers: 'cicccmap:cicccmap_group',
+                layers: 'cicomap:cicomap_group',
                 bbox: '{bbox-epsg-3857}',
                 width: 512,
                 height: 512,
@@ -2364,13 +2364,13 @@ export const glMapConfigTest0t1 = (id, geoData, center, zoom) => ({
       /* [SOURCES.WMS]: {
           type: 'raster',
           tiles: [
-            'http://decision.cnciccc.com/cicccmap/wms?' +
+            'http://decision.cncico.com/cicomap/wms?' +
             qs.stringify(
               {
                 service: 'WMS',
                 version: '1.1.0',
                 request: 'GetMap',
-                layers: 'cicccmap:cicccmap_group',
+                layers: 'cicomap:cicomap_group',
                 bbox: '{bbox-epsg-3857}',
                 width: 512,
                 height: 512,
@@ -2448,7 +2448,7 @@ export const glMapConfigTest0t1 = (id, geoData, center, zoom) => ({
 // 原始配置2 - 需要自己在loader里面配置geojson需要修改封装方法 -最新规范
 export const glMapConfigTest1 = (id, center, zoom) => ({
   container: id, // 容器的id
-  // style: 'http://decision.cnciccc.com/gis/dist/styles/VectorStyle-dark.json', // 地图描述数据的路径
+  // style: 'http://decision.cncico.com/gis/dist/styles/VectorStyle-dark.json', // 地图描述数据的路径
   // style: dark, // 地图描述数据的路径
   style: light, // 地图描述数据的路径
   center: center || [120.5, 28.8], // 初始位置，经度纬度 [lng, lat]
@@ -2460,7 +2460,7 @@ export const glMapConfigTest1 = (id, center, zoom) => ({
 // 原始配置2 - 需要自己在loader里面配置geojson需要修改封装方法 -最新规范
 export const glMapConfigTest2 = (id, center, zoom) => ({
   container: id, // 容器的id
-  // style: 'http://decision.cnciccc.com/gis/dist/styles/VectorStyle-dark.json', // 地图描述数据的路径
+  // style: 'http://decision.cncico.com/gis/dist/styles/VectorStyle-dark.json', // 地图描述数据的路径
   style: dark, // 地图描述数据的路径
   center: center || [120.5, 28.8], // 初始位置，经度纬度 [lng, lat]
   zoom: zoom || 6.5, // 初始缩放
@@ -2480,9 +2480,9 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
   style: {
     version: 8,
     sources: {
-      ciccc: {
+      cico: {
         type: 'vector',
-        url: 'http://decision.cnciccc.com/gis/dist/styles/tiles/ciccc-map.json'
+        url: 'http://decision.cncico.com/gis/dist/styles/tiles/cico-map.json'
       },
       tianditu: {
         type: 'raster',
@@ -2498,8 +2498,8 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
         generateId: true
       }
     },
-    glyphs: 'http://decision.cnciccc.com/gis/dist/fonts/{fontstack}/{range}.pbf',
-    sprite: 'http://decision.cnciccc.com/gis/dist/sprite/sprite',
+    glyphs: 'http://decision.cncico.com/gis/dist/fonts/{fontstack}/{range}.pbf',
+    sprite: 'http://decision.cncico.com/gis/dist/sprite/sprite',
     layers: [
       {
         id: 'background',
@@ -2511,7 +2511,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'land',
         type: 'fill',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562233264056352769',
         paint: {
           'fill-color': {
@@ -2528,7 +2528,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'landuse_forestland',
         type: 'fill',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1561885517834928130',
         minzoom: 4,
         paint: {
@@ -2546,7 +2546,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'landcover_wood',
         type: 'fill',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1561885517834928130',
         minzoom: 4,
         paint: {
@@ -2560,7 +2560,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'landcover_grass',
         type: 'fill',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1561885517834928130',
         minzoom: 4,
         paint: {
@@ -2574,7 +2574,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'landuse_residential',
         type: 'fill',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1561885517834928130',
         maxzoom: 24,
         minzoom: 9,
@@ -2593,7 +2593,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'landuse_cemetery',
         type: 'fill',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1561885517834928130',
         minzoom: 9,
         filter: ['==', 'fclass', 'cemetery'],
@@ -2604,7 +2604,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'water',
         type: 'fill',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1561883584248201217',
         minzoom: 4,
         paint: {
@@ -2625,7 +2625,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'province_outline',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1564080509093462018',
         minzoom: 3,
         layout: {
@@ -2645,7 +2645,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'tunnel_secondary_tertiary_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 8,
         layout: {
@@ -2670,7 +2670,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'tunnel_trunk_primary_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 7,
         layout: {
@@ -2697,7 +2697,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'tunnel_motorway_link_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 5,
         layout: {
@@ -2724,7 +2724,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'tunnel_motorway_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 5,
         layout: {
@@ -2750,7 +2750,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'tunnel_motorway_link',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 5,
         layout: {
@@ -2775,7 +2775,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'tunnel_secondary_tertiary',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 8,
         layout: {
@@ -2799,7 +2799,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'tunnel_trunk_primary',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 7,
         layout: {
@@ -2823,7 +2823,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'tunnel_motorway',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 5,
         layout: {
@@ -2847,7 +2847,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_trunk_primary_link_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 7,
         layout: {
@@ -2873,7 +2873,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_motorway_link_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 10,
         layout: {
@@ -2900,7 +2900,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_secondary_tertiary_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 8,
         layout: {
@@ -2925,7 +2925,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_trunk_primary_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 7,
         layout: {
@@ -2952,7 +2952,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_motorway_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 5,
         layout: {
@@ -2978,7 +2978,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_trunk_primary_link',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 7,
         layout: {
@@ -3003,7 +3003,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_motorway_link',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 10,
         layout: {
@@ -3029,7 +3029,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_secondary_tertiary',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 8,
         layout: {
@@ -3054,7 +3054,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_trunk_primary',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 7,
         layout: {
@@ -3079,7 +3079,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_motorway',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 5,
         layout: {
@@ -3104,7 +3104,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'bridge_motorway_link_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 5,
         layout: {
@@ -3129,7 +3129,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'bridge_secondary_tertiary_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 8,
         layout: {
@@ -3152,7 +3152,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'bridge_trunk_primary_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 7,
         layout: {
@@ -3177,7 +3177,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'bridge_motorway_casing',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 5,
         layout: {
@@ -3201,7 +3201,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'bridge_motorway_link',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 5,
         layout: {
@@ -3225,7 +3225,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'bridge_secondary_tertiary',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 8,
         layout: {
@@ -3248,7 +3248,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'bridge_trunk_primary',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 7,
         layout: {
@@ -3272,7 +3272,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'bridge_motorway',
         type: 'line',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 5,
         layout: {
@@ -3295,7 +3295,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_oneway',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 15,
         layout: {
@@ -3320,7 +3320,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_oneway_opposite',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 15,
         layout: {
@@ -3345,7 +3345,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'road_label',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562240792513265666',
         minzoom: 13,
         layout: {
@@ -3373,7 +3373,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'place_other',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562597969350410241',
         minzoom: 10,
         layout: {
@@ -3402,7 +3402,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'place_village',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562597859849715713-1',
         minzoom: 10,
         layout: {
@@ -3428,7 +3428,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'place_town',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562597969350410241',
         minzoom: 8,
         layout: {
@@ -3454,7 +3454,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'place_county',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562597969350410241',
         minzoom: 5,
         maxzoom: 12,
@@ -3484,7 +3484,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'place_city',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562597969350410241',
         minzoom: 5,
         maxzoom: 10,
@@ -3523,7 +3523,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'place_province',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562597969350410241',
         minzoom: 3,
         maxzoom: 7,
@@ -3552,7 +3552,7 @@ export const glMapConfigTest3 = (id, geoData, center, zoom) => ({
       {
         id: 'place_country',
         type: 'symbol',
-        source: 'ciccc',
+        source: 'cico',
         'source-layer': '1562597969350410241',
         layout: {
           'text-font': ['NotoSansSCRegular'],
