@@ -23,7 +23,7 @@ import MapLend from './components/MapLend.vue'
 /* import { http } from '@/api'
 import { showReqError } from '@/hooks/useError' */
 // mock
-// import serverArea from './mapData/mock/serverArea.json'
+import serverArea from './mapData/mock/serverArea.json'
 import * as popupConfig from './mapData/popupConfig'
 
 /**
@@ -71,7 +71,7 @@ onMounted(() => {
  */
 const initPage = () => {
   // 获取数据
-  // getServerAreaMapData()
+  getServerAreaMapData()
 }
 
 /**
