@@ -36,3 +36,8 @@ package.json
 
 auto-imports.d.ts
 components.d.ts
+
+
+# 暂时禁用exlint
+; /src/*
+/src/views/test

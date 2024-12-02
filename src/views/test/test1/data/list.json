@@ -1,0 +1,80 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "systemId": 1,
+            "systemName": "收银",
+            "itemSystemList": [
+                {
+                    "itemSystemId": 1,
+                    "itemSystemName": "配置中心",
+                    "itemSystemSubTitle": "收银系统的配置中心",
+                    "itemSystemImgUrl": "http://192.168.6.47/assets/4-Ul6ePy8O.svg",
+                    "itemSystemLinkUrl": "https://www.baidu.com"
+                },
+                {
+                    "itemSystemId": 2,
+                    "itemSystemName": "配置中心1",
+                    "itemSystemSubTitle": "收银系统的配置中心",
+                    "itemSystemImgUrl": "http://192.168.6.47/assets/4-Ul6ePy8O.svg",
+                    "itemSystemLinkUrl": "https://www.baidu.com"
+                },
+                {
+                    "itemSystemId": 3,
+                    "itemSystemName": "配置中心2",
+                    "itemSystemSubTitle": "收银系统的配置中心",
+                    "itemSystemImgUrl": "http://192.168.6.47/assets/4-Ul6ePy8O.svg",
+                    "itemSystemLinkUrl": "https://www.baidu.com"
+                },
+                {
+                    "itemSystemId": 4,
+                    "itemSystemName": "配置中心3",
+                    "itemSystemSubTitle": "收银系统的配置中心",
+                    "itemSystemImgUrl": "http://192.168.6.47/assets/4-Ul6ePy8O.svg",
+                    "itemSystemLinkUrl": "https://www.baidu.com"
+                },
+                {
+                    "itemSystemId": 5,
+                    "itemSystemName": "配置中心",
+                    "itemSystemSubTitle": "收银系统的配置中心",
+                    "itemSystemImgUrl": "https://gips0.baidu.com/it/u=838505001,1009740821&fm=3028&app=3028&f=PNG&fmt=auto&q=100&size=f254_80",
+                    "itemSystemLinkUrl": "https://www.baidu.com"
+                },
+                {
+                    "itemSystemId": 6,
+                    "itemSystemName": "配置中心",
+                    "itemSystemSubTitle": "收银系统的配置中心",
+                    "itemSystemImgUrl": "https://gips0.baidu.com/it/u=838505001,1009740821&fm=3028&app=3028&f=PNG&fmt=auto&q=100&size=f254_80",
+                    "itemSystemLinkUrl": "https://www.baidu.com"
+                }
+            ]
+        },
+        {
+            "systemId": 2,
+            "systemName": "供应链",
+            "itemSystemList": [
+                {
+                    "itemSystemId": 1,
+                    "itemSystemName": "配置中心",
+                    "itemSystemSubTitle": "供应链系统的配置中心",
+                    "itemSystemImgUrl": "http://192.168.6.47/assets/4-Ul6ePy8O.svg",
+                    "itemSystemLinkUrl": "https://www.baidu.com"
+                }
+            ]
+        },
+        {
+            "systemId": 3,
+            "systemName": "宁波项目",
+            "itemSystemList": [
+                {
+                    "itemSystemId": 1,
+                    "itemSystemName": "无线网质量评估系统",
+                    "itemSystemSubTitle": "宁波项目-无线网质量评估系统",
+                    "itemSystemImgUrl": "http://192.168.6.47/assets/4-Ul6ePy8O.svg",
+                    "itemSystemLinkUrl": "http://192.168.6.47/login"
+                }
+            ]
+        }
+    ],
+    "msg": "成功"
+  }
