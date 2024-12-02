@@ -51,6 +51,8 @@
 import { ref, nextTick } from 'vue'
 import list from './data/list'
 
+import { http } from '@/api'
+
 const listData = ref(null)
 let activeStep = 0
 
@@ -102,31 +104,34 @@ const onScroll = (e) => {
 }
 
 const setIn = (val) => {
-  // console.log("点击进入页面", val)
+  console.log("点击进入页面", val)
 
   const { itemSystemLinkUrl } = val
 
-  window.open(itemSystemLinkUrl, '_blank')
+  // window.open(itemSystemLinkUrl, '_blank')
 }
 
-const getPageList = () => {
-  // 接口请求
-  // ......
-  console.log("请求接口获取列表数据", list)
+const getPageList = async () => {
+  try {
+    let res = await http('testListData')
+    console.log(res)
 
-  // 处理数据并赋值
-  listData.value = list.data
+    // 处理数据并赋值
+    listData.value = list.data
+
+    nextTick(() => {
+      setTimeout(() => {
+        jump()
+      }, 300);
+    })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 
 // 调用接口获取数据
 getPageList()
-
-nextTick(() => {
-  setTimeout(() => {
-    jump()
-  }, 300);
-})
 </script>
 
 <style lang="scss" scoped>
@@ -216,7 +221,6 @@ nextTick(() => {
 
       .cont_main {
         flex: 1;
-        // padding-top: 20px;
 
         .cont_item {
           width: 96%;

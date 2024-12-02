@@ -8,8 +8,8 @@ export default [
    */
 
   // 地图接口
-  ['getMapData', [`${mockURI}/home/map`, 'get', { noLoading: true }]],
-  ['getMapData1', [`${mockURI}/indicators`, 'get', { noLoading: true }]]
+  ['testListData', [`${mockURI}/testListData`, 'get', { noLoading: true }]],
+  // ['getMapData1', [`${mockURI}/indicators`, 'get', { noLoading: true }]]
   // ['getMapData', ['/mock/zhgs_data_syn/dev/level/kanban/home/map', 'post', { noLoading: true, noNeedOrgId: true }]]
   // ['getMapData', ['http://183.129.232.106:8925/zhgs_data_syn/dev/level/kanban/home/map', 'post', { noLoading: true, noNeedOrgId: true }]]
 ]
