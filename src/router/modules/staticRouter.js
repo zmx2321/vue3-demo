@@ -25,8 +25,8 @@ export const staticRouter = [
   {
     path: '/test',
     name: 'Test',
-    redirect: '/test/test1',
-    component: () => import('@/views/test/test1/index.vue'),
+    redirect: '/test/test2',
+    // component: () => import('@/views/test/test2/index.vue'),
     meta: {
       title: 'Test',
       icon: 'House'
@@ -40,6 +40,15 @@ export const staticRouter = [
           keepAlive: true
         },
         component: () => import('@/views/test/test1/index.vue'),
+      },
+      {
+        path: '/test/test2',
+        name: 'Test2',
+        meta: {
+          title: 'test2',
+          keepAlive: true
+        },
+        component: () => import('@/views/test/test2/index.vue'),
       },
     ]
   },
