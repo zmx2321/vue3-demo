@@ -21,8 +21,8 @@ import ElementPlus from 'element-plus'  //引入element-plus库
 
 const app = createApp(App)
 
-import VForm3 from 'vform3-builds'  //引入VForm3库
-import 'vform3-builds/dist/designer.style.css'  //引入VForm3样式
+/* import VForm3 from 'vform3-builds'  //引入VForm3库
+import 'vform3-builds/dist/designer.style.css'  //引入VForm3样式 */
 
 app.config.errorHandler = errorHandler
 Object.entries(ElementPlusIconsVue).forEach(([key, component]) => {
