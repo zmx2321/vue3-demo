@@ -1,6 +1,6 @@
 <template>
   <section>
-    <v-form-designer></v-form-designer>
+    <!-- <v-form-designer></v-form-designer> -->
   </section>
 </template>
 

@@ -3,7 +3,7 @@ export default {
   sources: {
     cico: {
       type: 'vector',
-      url: 'http://decision.cncico.com/gis/dist/styles/tiles/cico-map.json'
+      url: 'http://decision.ccciii.com/gis/dist/styles/tiles/cico-map.json'
     },
     tianditu: {
       type: 'raster',
@@ -13,8 +13,8 @@ export default {
       tileSize: 256
     }
   },
-  glyphs: 'http://decision.cncico.com/gis/dist/fonts/{fontstack}/{range}.pbf',
-  sprite: 'http://decision.cncico.com/gis/dist/sprite/sprite',
+  glyphs: 'http://decision.ccciii.com/gis/dist/fonts/{fontstack}/{range}.pbf',
+  sprite: 'http://decision.ccciii.com/gis/dist/sprite/sprite',
   layers: [
     {
       id: 'background',
